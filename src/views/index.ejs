@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+		<title>LSD Frontend</title>
+	</head>
+	<body class="container">
+		<h1><%= title %></h1>
+
+		<div>
+			<h2>List Template</h2>
+
+            <h2><%= numbers %></h2>
+			<ul>
+				<% for (item in items ) { %>
+				<li><%= item %> <% } %></li>
+			</ul>
+		</div>
+
+		<a href="https://ejs.co/#docs">ejs documentation</a>
+	</body>
+</html>
