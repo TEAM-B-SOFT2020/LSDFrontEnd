@@ -1,11 +1,11 @@
 // libraries
 import * as express from 'express';
 import * as contract from 'contract';
-
+import { moveCursor } from 'readline';
 import ContractMock from '../contract/ContractMock';
+import IAirportIdentifier from 'contract/src/IAirportIdentifier';
+import ContractRPC from '../contract/ContractRPC';
 
-
-import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 
 
 
@@ -21,15 +21,13 @@ router.get('/', async (req, res) => {
     const mock = new ContractMock();
 
     // uses the mock to get carrier information
-    const bookingId: IBookingIdentifier = { id: 'test' };
-    
-    const booking = await mock.getBooking(bookingId);
+    const carrier = await mock.getCarrierInformation("test");
 
     //create a new object that contains the object carrier
-    const content: object = { booking };
+    const content: object = { carrier };
     
     //Return the content to the carriers view
-	res.render('booking', content);
+	res.render('carriers', content);
 });
 
 export default router;
