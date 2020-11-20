@@ -25,9 +25,8 @@ router.get('/', async (req, res) => {
 	const flights = await mock.getFlightsAvailable(arrivalAirport, departureAirport, 1);
 	const numbers = flights.length;
 
-	const content: object = { title: 'Hello from flights!', flights, numbers};
+	const content: object = { title: 'Hello from', flights, numbers};
 	res.render('flights', content);
 });
-
 
 export default router;

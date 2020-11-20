@@ -17,12 +17,12 @@ const app: express.Application = express();
 
 // ejs configuration
 app.set('views', path.join(__dirname, 'views'));
-app.set('flights', path.join("/views", 'flights'));
 app.set('view engine', 'ejs');
 
 // route configuration
 app.use('/', views);
 app.use("/flights", flights)
+
 app.use('/api', api);
 app.use('/api/flights', flightapi);
 
