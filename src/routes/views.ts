@@ -1,8 +1,7 @@
 // libraries
 import * as express from 'express';
-import ContractRPC from '../contract/ContractRPC';
-//import * as contract from 'contract';
 
+//import * as contract from 'contract';
 
 
 // classes, interfaces & functions
