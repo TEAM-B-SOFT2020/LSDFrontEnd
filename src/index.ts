@@ -10,6 +10,8 @@ import views from './routes/views';
 import api from './routes/api';
 import flightapi from './routes/flightapi';
 import flights from './routes/flights';
+import carriers from './routes/carriers';
+import booking from './routes/booking';
 
 // environments variables -> .env
 const port: any = process.env.PORT;
@@ -22,6 +24,8 @@ app.set('view engine', 'ejs');
 // route configuration (if you want a new page with some new data)
 app.use('/', views);
 app.use('/flights', flights);
+app.use('/carriers', carriers);
+app.use('/booking', booking);
 
 
 app.use('/api', api);

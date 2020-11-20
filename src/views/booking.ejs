@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+		<title>LSD Frontend</title>
+	</head>
+	<body class="container">
+		
+       <p>
+        Afgang fra : 
+        <%= booking.flightBookings[0].departureAirport.iata %>
+        <br>
+        <%= booking.flightBookings[0].arrivalAirport.iata %>
+        <br>
+        <%= booking.id %>
+        <%= booking.flightBookings[0].carrier.name %>
+        
+    </p> 
+	</body>
+</html>
