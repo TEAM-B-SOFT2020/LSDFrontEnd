@@ -19,9 +19,10 @@ const app: express.Application = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// route configuration
+// route configuration (if you want a new page with some new data)
 app.use('/', views);
-app.use("/flights", flights)
+app.use('/flights', flights);
+
 
 app.use('/api', api);
 app.use('/api/flights', flightapi);
