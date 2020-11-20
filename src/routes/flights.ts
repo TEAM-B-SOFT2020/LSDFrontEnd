@@ -2,7 +2,6 @@
 import * as express from 'express';
 import ContractMock from '../contract/ContractMock';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
-import ICarrierDetail from 'contract/src/DTO/ICarrierDetail';
 
 const router: express.Router = express.Router();
 
@@ -25,9 +24,8 @@ router.get('/', async (req, res) => {
 	const flights = await mock.getFlightsAvailable(arrivalAirport, departureAirport, 1);
 	const numbers = flights.length;
 
-	const content: object = { title: 'Hello from flights!', flights, numbers};
+	const content: object = { title: 'Hello from', flights, numbers};
 	res.render('flights', content);
 });
-
 
 export default router;
