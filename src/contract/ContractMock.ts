@@ -125,7 +125,7 @@ export default class ContractMock implements IContract{
         const carrier: ICarrierDetail = { iata: '', name: '' };
         const departureAirport: IAirportIdentifier = { iata: 'Gatwick' };
         const arrivalAirport: IAirportIdentifier = { iata: 'Heathrow ' };
-        const passengers : IFlightPassenger[] = [passenger1,passenger2];
+        const passengers : IFlightPassenger[] = [passenger1,passenger2];        
         const flightBooking1 : IFlightBookingDetail = {passengers,carrier,departureDate: 5,arrivalDate: 10,arrivalAirport,departureAirport,flightCode: 'bdc123'};
         const flightBooking2 : IFlightBookingDetail = {passengers,carrier,departureDate: 5,arrivalDate: 10,arrivalAirport,departureAirport,flightCode: 'bdc123'};
         const flightBookings : IFlightBookingDetail[] = [flightBooking1,flightBooking2];

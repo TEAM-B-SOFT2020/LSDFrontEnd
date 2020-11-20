@@ -6,7 +6,6 @@ import Contract from "../contract/ContractMock";
 
 const contract: IContract = new Contract();
 
-
 // classes, interfaces & functions
 const router: express.Router = express.Router();
 

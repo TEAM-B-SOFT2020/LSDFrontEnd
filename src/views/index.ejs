@@ -4,8 +4,18 @@
 		<link href="style.css" rel="stylesheet" type="text/css" />
 		<title>LSD Frontend</title>
 	</head>
+	
+	<header>	
+		<%- include('partials/navbar') %>
+	</header>
 	<body class="container">
-		<h1><%= title %></h1>	
-
+		
+		<div>
+			<h1><%= title %></h1>	
+		</div>
+	
 	</body>
+	
+		<%- include('partials/footer') %>
+	
 </html>

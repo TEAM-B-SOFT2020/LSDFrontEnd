@@ -2,9 +2,12 @@
 <html lang="en">
 	<head>
 		<link href="style.css" rel="stylesheet" type="text/css" />
+		
 		<title>LSD Frontend</title>
 	</head>
+	
 	<body class="container">
+		
 		<h1><%= title %></h1>
 		<br>
 		<% if (flights.length) { %>
@@ -25,4 +28,5 @@
 
 				<% })} %>		
 	</body>
+	<%- include('partials/footer') %>
 </html>

@@ -3,7 +3,7 @@ import * as express from 'express';
 
 import ContractMock from '../contract/ContractMock';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
-import ICarrierDetail from 'contract/src/DTO/ICarrierDetail';
+
 
 // classes, interfaces & functions
 //import Contract from '../contract';
