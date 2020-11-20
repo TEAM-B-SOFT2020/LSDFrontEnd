@@ -13,11 +13,6 @@ import IFlightIdentifier from 'contract/src/IFlightIdentifier';
 import { promiseImpl } from 'ejs';
 
 export default class ContractMock implements IContract{
-
-    constructor(){
-        this;
-    }
-
     async getCarrierInformation(iata: string): Promise<ICarrierDetail> {
        
         const carrierDetail: ICarrierDetail ={
@@ -43,7 +38,31 @@ export default class ContractMock implements IContract{
 		const arrivalAirport: IAirportIdentifier = { iata: '' };
 		const carrier: ICarrierDetail = { iata: '', name: '' };
 
-		const flightSummary: IFlightSummary = {
+		const flight1: IFlightSummary = {
+			departureAirport,
+			arrivalAirport,
+			carrier,
+			departureDate: 7,
+			arrivalDate: 12,
+			availableSeats: 100,
+			seatPrice: 1500,
+			flightCode: 'abc123',
+        };
+        
+        
+		const flight2: IFlightSummary = {
+			departureAirport,
+			arrivalAirport,
+			carrier,
+			departureDate: 1,
+			arrivalDate: 6,
+			availableSeats: 255,
+			seatPrice: 1200,
+			flightCode: 'abc346',
+        };
+        
+        
+		const flight3: IFlightSummary = {
 			departureAirport,
 			arrivalAirport,
 			carrier,
@@ -51,10 +70,22 @@ export default class ContractMock implements IContract{
 			arrivalDate: 10,
 			availableSeats: 9,
 			seatPrice: 500,
-			flightCode: 'abc123',
+			flightCode: 'abc789',
+        };
+        
+        
+		const flight4: IFlightSummary = {
+			departureAirport,
+			arrivalAirport,
+			carrier,
+			departureDate: 1,
+			arrivalDate: 15,
+			availableSeats: 100,
+			seatPrice: 2500,
+			flightCode: 'bcd123',
 		};
 
-		const flightSummaries: IFlightSummary[] = [flightSummary];
+		const flightSummaries: IFlightSummary[] = [flight1, flight2, flight3, flight4];
 		return new Promise((resolve, reject) => resolve(flightSummaries));
     }
     async reserveFlight(id: IFlightIdentifier, amountSeats: number): Promise<IReservationSummary> {
