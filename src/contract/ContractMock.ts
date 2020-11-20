@@ -9,19 +9,43 @@ import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
 
-export default class ContractMock implements IContract{
+class ContractMock implements IContract{
     getCarrierInformation(iata: string): Promise<ICarrierDetail> {
         throw new Error('Method not implemented.');
     }
     getAirportInformation(iata: string): Promise<IAirportDetail> {
         throw new Error('Method not implemented.');
     }
-    async getFlightsAvailable(departure: IAirportIdentifier, arrival: IAirportIdentifier, depart: number): Promise<IFlightSummary[]> {
+    public async getFlightsAvailable(departure: IAirportIdentifier, arrival: IAirportIdentifier, depart: number): Promise<IFlightSummary[]> {
         const departureAirport: IAirportIdentifier = { iata: '' };
 		const arrivalAirport: IAirportIdentifier = { iata: '' };
 		const carrier: ICarrierDetail = { iata: '', name: '' };
 
-		const flightSummary: IFlightSummary = {
+		const flight1: IFlightSummary = {
+			departureAirport,
+			arrivalAirport,
+			carrier,
+			departureDate: 7,
+			arrivalDate: 12,
+			availableSeats: 100,
+			seatPrice: 1500,
+			flightCode: 'abc123',
+        };
+        
+        
+		const flight2: IFlightSummary = {
+			departureAirport,
+			arrivalAirport,
+			carrier,
+			departureDate: 1,
+			arrivalDate: 6,
+			availableSeats: 255,
+			seatPrice: 1200,
+			flightCode: 'abc346',
+        };
+        
+        
+		const flight3: IFlightSummary = {
 			departureAirport,
 			arrivalAirport,
 			carrier,
@@ -29,11 +53,27 @@ export default class ContractMock implements IContract{
 			arrivalDate: 10,
 			availableSeats: 9,
 			seatPrice: 500,
-			flightCode: 'abc123',
+			flightCode: 'abc789',
+        };
+        
+        
+		const flight4: IFlightSummary = {
+			departureAirport,
+			arrivalAirport,
+			carrier,
+			departureDate: 1,
+			arrivalDate: 15,
+			availableSeats: 100,
+			seatPrice: 2500,
+			flightCode: 'bcd123',
 		};
 
-		const flightSummaries: IFlightSummary[] = [flightSummary];
-		return new Promise((resolve, reject) => resolve(flightSummaries));
+		const _flightSummaries: IFlightSummary[] = [flight1, flight2, flight3, flight4];
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+                resolve(_flightSummaries);
+            }, 5000);
+		});
     }
     reserveFlight(id: IFlightIdentifier, amountSeats: number): Promise<IReservationSummary> {
         throw new Error('Method not implemented.');
@@ -47,6 +87,6 @@ export default class ContractMock implements IContract{
     cancelBooking(id: IBookingIdentifier): Promise<void> {
         throw new Error('Method not implemented.');
     }
-
-
 }
+
+export default ContractMock; 

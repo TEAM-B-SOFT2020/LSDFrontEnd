@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+		<title>LSD Frontend</title>
+	</head>
+	<body class="container">
+		<h1><%= title %></h1>
+		<br>
+
+
+		<% if (flights.length) { %>
+			<p>Flight count: <%= numbers %> </p>
+				<% flights.forEach((IFlightSummary) => { %>
+					<div style="border: 1px solid white; margin-bottom: 2px;">
+					<ul>
+					<li><%= IFlightSummary.departureAirport.iata %></li>
+					<li><%= IFlightSummary.arrivalAirport.iata %></li>
+					<li><%= IFlightSummary.carrier.iata %></li>
+					<li><%= IFlightSummary.departureDate %></li>
+					<li><%= IFlightSummary.arrivalDate %></li>
+					<li><%= IFlightSummary.availableSeats %></li>
+					<li><%= IFlightSummary.seatPrice %></li>
+					<li><%= IFlightSummary.flightCode %></li>
+					</ul>
+				</div>
+
+				<% })} %>		
+	</body>
+</html>

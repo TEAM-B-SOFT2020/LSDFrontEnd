@@ -1,8 +1,6 @@
 // libraries
 import * as express from 'express';
 
-// classes, interfaces & functions
-
 
 const router: express.Router = express.Router();
 
