@@ -10,7 +10,6 @@ import IReservationSummary from 'contract/src/DTO/IReservationSummary';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
-import { promiseImpl } from 'ejs';
 
 export default class ContractMock implements IContract{
     async getCarrierInformation(iata: string): Promise<ICarrierDetail> {
