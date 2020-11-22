@@ -1,4 +1,6 @@
 // libraries
+import { createConfigItem } from '@babel/core';
+import IFlightPassenger from 'contract/src/DTO/IFlightPassenger';
 import * as express from 'express';
 
 //import * as contract from 'contract';
@@ -9,10 +11,10 @@ const router: express.Router = express.Router();
 
 
 router.get('/', async (req, res) => {
-		
 	// stephan syntax:: just a complex way to make a simple list
 	const content: object = { title: 'Hello TypeScript RPC'};
 	res.render('index', content);
 });
+
 
 export default router;

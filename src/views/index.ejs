@@ -10,9 +10,17 @@
 	</header>
 	<body class="container">
 		
-		<div>
-			<h1><%= title %></h1>	
-		</div>
+		<form action="/booking" method="POST">
+      
+			<label for="header">Firstname</label>
+			<input name="firstname" type="string" placeholder="Firstname" required />
+			<br>
+			<label for="header">Lastname</label>
+			<input name="lastname" type="string" placeholder="Lastname" required />
+			<br>			
+			
+			<input type="submit" />
+		  </form>
 	
 	</body>
 	

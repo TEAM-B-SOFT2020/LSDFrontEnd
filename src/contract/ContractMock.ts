@@ -97,27 +97,8 @@ export default class ContractMock implements IContract{
         return new Promise((resolve, reject) => resolve(reservationSummary));        
     }
 
-    async createBooking(reservationDetails: IReservationDetail[], creditCardNumber: number, frequentFlyerNumber?: number): Promise<IBookingDetail> {
-    
-        const passenger1 : IFlightPassenger = {pnr:'ADJ123KBA',firstName:'Andreas',lastName:'Jorgelsen'};
-        const passenger2 : IFlightPassenger = {pnr:'JVH223BLL',firstName:'Jonas',lastName:'Haintz'};
-        const carrier: ICarrierDetail = { iata: '', name: '' };
-        const departureAirport: IAirportIdentifier = { iata: 'Copenhagen' };
-        const arrivalAirport: IAirportIdentifier = { iata: 'Oslo' };
-        const passengers : IFlightPassenger[] = [passenger1,passenger2];
-        const flightBooking1 : IFlightBookingDetail = {passengers,carrier,departureDate: 5,arrivalDate: 10,arrivalAirport,departureAirport,flightCode: 'bdc123'};
-        const flightBooking2 : IFlightBookingDetail = {passengers,carrier,departureDate: 5,arrivalDate: 10,arrivalAirport,departureAirport,flightCode: 'bdc123'};
-        const flightBookings : IFlightBookingDetail[] = [flightBooking1,flightBooking2];
-
-        const bookingDetail: IBookingDetail = {
-            flightBookings,
-            id:"5347",
-            frequentFlyerId : "8910",
-            creditCardNumber : 1254452035,
-            price: 5000,
-        };
-        return new Promise((resolve, reject) => resolve(bookingDetail));
-   
+    async createBooking(reservationDetails: IReservationDetail[], creditCardNumber: number, frequentFlyerNumber?: number): Promise<IBookingDetail> {    
+        throw new Error('Method not implemented.');   
     }
     async getBooking(id: IBookingIdentifier): Promise<IBookingDetail> {
         const passenger1 : IFlightPassenger = {pnr:'1234',firstName:'Jonas',lastName:'Hein'};

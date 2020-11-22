@@ -1,7 +1,11 @@
 // libraries
 import * as express from 'express';
-import ContractMock from '../contract/ContractMock';
+
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
+import IContract from 'contract';
+import Contract from "../contract/ContractMock";
+
+const contract: IContract = new Contract();
 
 const router: express.Router = express.Router();
 
@@ -19,11 +23,8 @@ router.get('/', async (req, res) => {
 router.get('/', async (req, res) => {
 	const departureAirport: IAirportIdentifier = { iata: '' };
 	const arrivalAirport: IAirportIdentifier = { iata: '' };
-
-	const mock = new ContractMock();
-	const flights = await mock.getFlightsAvailable(arrivalAirport, departureAirport, 1);
+	const flights = await contract.getFlightsAvailable(arrivalAirport, departureAirport, 1);
 	const numbers = flights.length;
-
 	const content: object = { title: 'Hello from', flights, numbers};
 	res.render('flights', content);
 });
