@@ -6,12 +6,12 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // routes
-import views from './routes/views';
-import api from './routes/api';
-import flightapi from './routes/flightapi';
-import flights from './routes/flights';
-import carriers from './routes/carriers';
-import booking from './routes/booking';
+import views from './routes/pages/views';
+import flights from './routes/pages/flights';
+import carriers from './routes/pages/carriers';
+import booking from './routes/pages/booking';
+import flightapi from './routes/api/flightapi';
+import api from './routes/api/api';
 
 // environments variables -> .env
 const port: any = process.env.PORT;

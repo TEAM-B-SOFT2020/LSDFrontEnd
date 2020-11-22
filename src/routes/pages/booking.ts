@@ -2,15 +2,11 @@
 import * as express from 'express';
 
 
-import ContractMock from '../contract/ContractMock';
-
-
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 
 
 import IContract from 'contract';
-import Contract from "../contract/ContractMock";
-
+import Contract from "../../contract/ContractMock";
 
 //Makes a mock of the ContractMock called mock
 const contract: IContract = new Contract();

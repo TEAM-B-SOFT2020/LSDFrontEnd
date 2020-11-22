@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link href="style.css" rel="stylesheet" type="text/css" />
-		
+		<%- include('imports/bootstrap') %>
 		<title>LSD Frontend</title>
-	</head>
-	<body class="container">
-		<%- include('partials/navbar') %>
-        
-        
-
-        <%= carrier.name %>
-
-	</body>
-	<%- include('partials/footer') %>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+	<head>
+	<body> 
+		<%- include('partials/navbar.ejs', {active: "home"})  %>
+		<main role="main">
+			<div class="container">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<%= carrier.name %>
+					</li>
+				</ul>
+			</div>
+		</main>
+		<%- include('partials/footer.ejs') %>
+		<%- include('imports/bootstrap-scripts.ejs') %> 
+	</body>		
 </html>

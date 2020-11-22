@@ -1,29 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link href="style.css" rel="stylesheet" type="text/css" />
+		<%- include('imports/bootstrap') %>
 		<title>LSD Frontend</title>
-	</head>
-	
-	<header>	
-		<%- include('partials/navbar') %>
-	</header>
-	<body class="container">
-		
-		<form action="/booking" method="POST">
-      
-			<label for="header">Firstname</label>
-			<input name="firstname" type="string" placeholder="Firstname" required />
-			<br>
-			<label for="header">Lastname</label>
-			<input name="lastname" type="string" placeholder="Lastname" required />
-			<br>			
-			
-			<input type="submit" />
-		  </form>
-	
-	</body>
-	
-		<%- include('partials/footer') %>
-	
+		<link href="style.css" rel="stylesheet" type="text/css" />
+	<head>
+	<body> 
+		<%- include('partials/navbar.ejs', {active: "home"})  %>
+		<main role="main">
+			<div class="container">
+				<h2><%= title %> </h2>
+			</div>
+		</main>
+		<%- include('partials/footer.ejs') %>
+		<%- include('imports/bootstrap-scripts.ejs') %> 
+	</body>		
 </html>
