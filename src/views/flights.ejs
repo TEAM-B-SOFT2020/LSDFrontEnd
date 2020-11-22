@@ -13,17 +13,17 @@
 				<% if (flights.length) { %>
 					<p><strong>Flight count: <%= numbers %></strong></p>
 					<div class="table-responsive">
-						<table class="table" id="table" data-toggle="table" data-height="460" data-sort-name="name" data-sort-order="desc" data-search="true">
+						<table class="table" id="table" data-toggle="table" data-sort-name="name" data-sort-order="desc" data-search="true">
 							<thead>
 							<tr>
-								<th>Carrier IATA</th>
+								<th data-sortable="true">Carrier IATA</th>
 								<th data-sortable="true">Flight Code</th>
-								<th>Departure Airport</th>
-								<th>Arrival Airport</th>
-								<th>Departure Date</th>
-								<th>Arrival Date</th>
-								<th>Available Seats</th>
-								<th>Seat Price</th>
+								<th data-sortable="true">Departure Airport</th>
+								<th data-sortable="true">Arrival Airport</th>
+								<th data-sortable="true">Departure Date</th>
+								<th data-sortable="true">Arrival Date</th>
+								<th data-sortable="true">Available Seats</th>
+								<th data-sortable="true">Seat Price</th>
 								</tr>
 							</thead>
 							<tbody>

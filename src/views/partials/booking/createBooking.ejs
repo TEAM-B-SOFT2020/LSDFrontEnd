@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%- include('../../imports/bootstrap') %>
+		<title>LSD Frontend</title>
+		<link href="../	style.css" rel="stylesheet" type="text/css" />
+	<head>
+	<body> 
+		<%- include('../../partials/navbar.ejs', {active: "booking"})  %>
+		<main role="main">
+			<div class="container">
+				<h2>Booking info</h2>
+				<% if(booking) {%>
+					<div class="table-responsive">
+						<table class="table text-center" id="table" data-toggle="table" data-sort-name="name" data-sort-order="desc" data-search="true">
+							<thead>
+								<tr>
+								  <th data-sortable="true">Booking ID</th>
+								  <th>Price</th>
+								  <th>Arrival Airport</th>
+								  <th>Departure Airport</th>
+								  <th>Flight Code</th>
+								  <th>PNR</th>
+								  <th>Passenger List</th>
+								  <th>Creditcard number</th>
+								  <th>Frequent Flyer ID</th>  
+								  </tr>
+							</thead>
+							<tbody>
+							  <% booking.flightBookings.forEach((IFlightBookingDetail) => { %>
+								<tr text->
+								  <td><%= booking.id %></td>
+								  <td><%= booking.price %>DKK</td>
+									<td><%= IFlightBookingDetail.arrivalAirport.iata %></td>
+									<td><%= IFlightBookingDetail.departureAirport.iata %></td>
+									<td><%= IFlightBookingDetail.flightCode %></td>         
+									<% if (IFlightBookingDetail.passengers.length) { %>			
+									  <td class="text-left">
+										<ul class="list-group">
+										  <% IFlightBookingDetail.passengers.forEach((IFlightPassenger) => { %>    
+											<li style="border: 0; padding: 2px;" class="list-group-item"><%= IFlightPassenger.pnr %></li>
+										  <% })%>
+										</ul>
+									  </td>
+									<%}%>
+									<% if (IFlightBookingDetail.passengers.length) { %>			
+										<td class="text-left">
+										  <ul class="list-group">
+											<% IFlightBookingDetail.passengers.forEach((IFlightPassenger) => { %>    
+											  <li style="border: 0; padding: 2px;" class="list-group-item"><%= IFlightPassenger.lastName %>, <%= IFlightPassenger.firstName %></li>
+											<% })%>
+										  </ul>
+										</td>
+									  <%}%>
+								  	<td><%= booking.creditCardNumber %></td>
+								  	<td><%= booking.frequentFlyerId %></td>
+								</tr>
+							  <% }) %>
+							</tbody>
+						</table>
+					</div>
+				<%} else {%>
+					<p>Found no booking...</p>
+				<%}%>
+			</div>
+
+		</main>
+		<%- include('../../partials/footer.ejs') %>
+		<%- include('../../imports/bootstrap-scripts') %> 
+	</body>		
+</html>

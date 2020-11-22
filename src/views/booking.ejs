@@ -9,46 +9,31 @@
 		<%- include('partials/navbar.ejs', {active: "booking"})  %>
 		<main role="main">
 			<div class="container">
-        <h2><%= title %></h2>
-        <% if (booking.flightBookings.length) { %>
-          <div class="table-responsive">
-          <table class="table">
-            <thead>
-                <tr>
-                  <th>Booking ID</th>
-                  <th>Price</th>
-                  <th>Arrival Airport</th>
-                  <th>Departure Airport</th>
-                  <th>Flight Code</th>
-                  <th>Passenger List</th>
-                  <th>Creditcard number</th>
-                  <th>Frequent Flyer ID</th>  
-                  </tr>
-            </thead>
-            <tbody>
-              <% booking.flightBookings.forEach((IFlightBookingDetail) => { %>
-                <tr>
-                  <td><%= booking.id %></td>
-                  <td><%= booking.price %>DKK</td>
-                    <td><%= IFlightBookingDetail.arrivalAirport.iata %></td>
-                    <td><%= IFlightBookingDetail.departureAirport.iata %></td>
-                    <td><%= IFlightBookingDetail.flightCode %></td>         
-                    <% if (IFlightBookingDetail.passengers.length) { %>			
-                      <td>
-                        <ul class="list-group">
-                          <% IFlightBookingDetail.passengers.forEach((IFlightPassenger) => { %>    
-                            <li style="border: 0; padding: 2px;" class="list-group-item"><%= IFlightPassenger.pnr %> :<%= IFlightPassenger.lastName %>, <%= IFlightPassenger.firstName %></li>
-                          <% })}%>
-                        </ul>
-                      </td>
-                  <td><%= booking.creditCardNumber %></td>
-                  <td><%= booking.frequentFlyerId %></td>
-                </tr>
-              <% }) %>
-            </tbody>
-          </table>
-        </div>
-        <% } %>
+        <h2>Hello from booking!</h2>
+
+        <hr />        
+        <h4>Find booking by id</h4>
+        <form action="/booking/get" method="POST">
+          <label for="header">Booking Id</label>
+          <input name="bookingId" type="string" placeholder="booking id" required />        
+         <input type="submit" />
+        </form>
+
+        <hr />        
+        <h4>Cancel booking by id</h4>
+        <form action="/booking/cancel" method="POST">
+          <label for="header">Booking Id</label>
+          <input name="bookingId" type="string" placeholder="booking id" required />        
+         <input type="submit" />
+        </form>
+
+        <hr />        
+        <h4>Create Booking</h4>
+        <form action="/booking/get" method="POST">
+          <label for="header">Booking Id</label>
+          <input name="bookingId" type="string" placeholder="booking id" required />        
+         <input type="submit" />
+        </form>
       </div>      
 		</main>
 		<%- include('partials/footer.ejs') %>

@@ -6,6 +6,8 @@ import * as express from 'express';
 
 // classes, interfaces & functions
 const router: express.Router = express.Router();
+const bodyParser = require('body-parser');
+router.use(bodyParser.urlencoded({ extended: true }));
 
 
 router.get('/', async (req, res) => {
@@ -15,4 +17,9 @@ router.get('/', async (req, res) => {
 	res.render('index', content);
 });
 
+router.post('/submit-form', async (req, res) => {
+	const username = req.body.username;
+	console.log(">>>>>>>>>: " + username);
+	res.status(204).send()
+});
 export default router;
