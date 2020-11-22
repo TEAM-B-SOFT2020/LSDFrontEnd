@@ -1,32 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link href="style.css" rel="stylesheet" type="text/css" />
-		
+		<%- include('imports/bootstrap') %>
 		<title>LSD Frontend</title>
-	</head>
-	
-	<body class="container">
-		
-		<h1><%= title %></h1>
-		<br>
-		<% if (flights.length) { %>
-			<p>Flight count: <%= numbers %> </p>
-				<% flights.forEach((IFlightSummary) => { %>
-					<div style="border: 1px solid white; margin-bottom: 2px;">
-					<ul>
-					<li><%= IFlightSummary.departureAirport.iata %></li>
-					<li><%= IFlightSummary.arrivalAirport.iata %></li>
-					<li><%= IFlightSummary.carrier.iata %></li>
-					<li><%= IFlightSummary.departureDate %></li>
-					<li><%= IFlightSummary.arrivalDate %></li>
-					<li><%= IFlightSummary.availableSeats %></li>
-					<li><%= IFlightSummary.seatPrice %></li>
-					<li><%= IFlightSummary.flightCode %></li>
-					</ul>
-				</div>
-
-				<% })} %>		
-	</body>
-	<%- include('partials/footer') %>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+	<head>
+	<body> 
+		<%- include('partials/navbar.ejs', {active: "flights"})  %>
+		<main role="main">
+			<div class="container">
+				<h2><%= title %></h2>
+				<% if (flights.length) { %>
+					<p><strong>Flight count: <%= numbers %></strong></p>
+					<div class="table-responsive">
+						<table class="table" id="table" data-toggle="table" data-height="460" data-sort-name="name" data-sort-order="desc" data-search="true">
+							<thead>
+							<tr>
+								<th>Carrier IATA</th>
+								<th data-sortable="true">Flight Code</th>
+								<th>Departure Airport</th>
+								<th>Arrival Airport</th>
+								<th>Departure Date</th>
+								<th>Arrival Date</th>
+								<th>Available Seats</th>
+								<th>Seat Price</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% flights.forEach((data) => { %>
+									<tr>
+										<td><%= data.carrier.iata %></td>
+										<td><%= data.flightCode %></td>
+										<td><%= data.departureAirport.iata %></td>
+										<td><%= data.arrivalAirport.iata %></td>
+										<td><%= data.departureDate %></td>
+										<td><%= data.arrivalDate %></td>
+										<td><%= data.availableSeats %></td>
+										<td><%= data.seatPrice %></td>
+									</tr>
+								<% }) %>
+							</tbody>
+						</table>
+						</div>
+				<% } %>		
+			</div>
+		</main>
+		<%- include('partials/footer.ejs') %>
+		<%- include('imports/bootstrap-scripts.ejs') %> 
+	</body>		
 </html>

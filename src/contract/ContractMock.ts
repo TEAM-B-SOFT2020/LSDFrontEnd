@@ -33,16 +33,16 @@ export default class ContractMock implements IContract{
 
 
     async getFlightsAvailable(departure: IAirportIdentifier, arrival: IAirportIdentifier, depart: number): Promise<IFlightSummary[]> {
-        const departureAirport: IAirportIdentifier = { iata: '' };
-		const arrivalAirport: IAirportIdentifier = { iata: '' };
-		const carrier: ICarrierDetail = { iata: '', name: '' };
+        const departureAirport: IAirportIdentifier = { iata: 'AB-112' };
+		const arrivalAirport: IAirportIdentifier = { iata: 'AC-053' };
+		const carrier: ICarrierDetail = { iata: '1123', name: 'Carrier-1' };
 
 		const flight1: IFlightSummary = {
 			departureAirport,
 			arrivalAirport,
 			carrier,
-			departureDate: 7,
-			arrivalDate: 12,
+			departureDate: 11,
+			arrivalDate: 11,
 			availableSeats: 100,
 			seatPrice: 1500,
 			flightCode: 'abc123',
@@ -53,8 +53,8 @@ export default class ContractMock implements IContract{
 			departureAirport,
 			arrivalAirport,
 			carrier,
-			departureDate: 1,
-			arrivalDate: 6,
+			departureDate: 11,
+			arrivalDate: 11,
 			availableSeats: 255,
 			seatPrice: 1200,
 			flightCode: 'abc346',
@@ -65,8 +65,8 @@ export default class ContractMock implements IContract{
 			departureAirport,
 			arrivalAirport,
 			carrier,
-			departureDate: 5,
-			arrivalDate: 10,
+			departureDate: 11,
+			arrivalDate: 11,
 			availableSeats: 9,
 			seatPrice: 500,
 			flightCode: 'abc789',
@@ -77,8 +77,8 @@ export default class ContractMock implements IContract{
 			departureAirport,
 			arrivalAirport,
 			carrier,
-			departureDate: 1,
-			arrivalDate: 15,
+			departureDate: 11,
+			arrivalDate: 11,
 			availableSeats: 100,
 			seatPrice: 2500,
 			flightCode: 'bcd123',

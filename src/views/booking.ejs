@@ -1,81 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-        <%- include('partials/navbar') %>
+		<%- include('imports/bootstrap') %>
+		<title>LSD Frontend</title>
 		<link href="style.css" rel="stylesheet" type="text/css" />
-        <title>LSD Frontend</title>
-        <style>
-            table {
-              font-family: arial, sans-serif;
-              border-collapse: collapse;
-              width: 100%;
-            }
-            
-            td, th {
-              border: 1px solid #dddddd;
-              text-align: left;
-              padding: 8px;
-              
-            }
-            th {
-              background-color: #3ad9db;
-            }
-            
-            tr:nth-child(even) {
-              background-color: #dddddd;
-            }
-            </style>
-	</head>
-	<body class="container">      
-      
-        
-        
+	<head>
+	<body> 
+		<%- include('partials/navbar.ejs', {active: "booking"})  %>
+		<main role="main">
+			<div class="container">
+        <h2><%= title %></h2>
         <% if (booking.flightBookings.length) { %>
-           <div>
-                <% booking.flightBookings.forEach((IFlightBookingDetail) => { %>
-                    <table>	
-                        <tr>
-                            <th>Booking ID</th>
-                            <th>Price</th>
-                            <th>Arrival Airport</th>
-                            <th>Departure Airport</th>
-                            <th>Flight Code</th>
-                            <th>Passenger List</th>
-                            <th>Creditcard number</th>
-                            <th>Frequent Flyer ID</th>                    
-                          </tr>
-					<div style="border: 1px solid white; margin-bottom: 2px;">
-					<ul>
-                    <tr>
-                        <td><%= booking.id %></td>
-                        <td><%= booking.price %>DKK</td>
-                        <td><%= IFlightBookingDetail.arrivalAirport.iata %></td>
-                        <td><%= IFlightBookingDetail.departureAirport.iata %></td>
-                        <td><%= IFlightBookingDetail.flightCode %></td>
-                    					
-                        <% if (IFlightBookingDetail.passengers.length) { %>			
-                        <td>
-                            <% IFlightBookingDetail.passengers.forEach((IFlightPassenger) => { %>  
-                                                      
-                                <%= IFlightPassenger.pnr %>:
-                                <%= IFlightPassenger.lastName %>, <%= IFlightPassenger.firstName %> 
-                                 <br>       
-                            </div>
-                            
-                            <% })}%>
-                        </td>
-                        <td><%= booking.creditCardNumber %></td>
-                        <td><%= booking.frequentFlyerId %></td>
-                    <tr>       
-                </div>
-            </table>
-            <br>
-        
-
-                <% })} %>
-            </div>
-            	
-    
-    <%- include('partials/footer') %>
-	</body>
+          <div class="table-responsive">
+          <table class="table">
+            <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Price</th>
+                  <th>Arrival Airport</th>
+                  <th>Departure Airport</th>
+                  <th>Flight Code</th>
+                  <th>Passenger List</th>
+                  <th>Creditcard number</th>
+                  <th>Frequent Flyer ID</th>  
+                  </tr>
+            </thead>
+            <tbody>
+              <% booking.flightBookings.forEach((IFlightBookingDetail) => { %>
+                <tr>
+                  <td><%= booking.id %></td>
+                  <td><%= booking.price %>DKK</td>
+                    <td><%= IFlightBookingDetail.arrivalAirport.iata %></td>
+                    <td><%= IFlightBookingDetail.departureAirport.iata %></td>
+                    <td><%= IFlightBookingDetail.flightCode %></td>         
+                    <% if (IFlightBookingDetail.passengers.length) { %>			
+                      <td>
+                        <ul class="list-group">
+                          <% IFlightBookingDetail.passengers.forEach((IFlightPassenger) => { %>    
+                            <li style="border: 0; padding: 2px;" class="list-group-item"><%= IFlightPassenger.pnr %> :<%= IFlightPassenger.lastName %>, <%= IFlightPassenger.firstName %></li>
+                          <% })}%>
+                        </ul>
+                      </td>
+                  <td><%= booking.creditCardNumber %></td>
+                  <td><%= booking.frequentFlyerId %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+        <% } %>
+      </div>      
+		</main>
+		<%- include('partials/footer.ejs') %>
+		<%- include('imports/bootstrap-scripts.ejs') %> 
+	</body>		
 </html>

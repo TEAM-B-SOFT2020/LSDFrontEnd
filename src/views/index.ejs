@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link href="style.css" rel="stylesheet" type="text/css" />
+		<%- include('imports/bootstrap') %>
 		<title>LSD Frontend</title>
-	</head>
-	
-	<header>	
-		<%- include('partials/navbar') %>
-	</header>
-	<body class="container">
-		
-		<div>
-			<h1><%= title %></h1>	
-		</div>
-	
-	</body>
-	
-		<%- include('partials/footer') %>
-	
+		<link href="style.css" rel="stylesheet" type="text/css" />
+	<head>
+	<body> 
+		<%- include('partials/navbar.ejs', {active: "home"})  %>
+		<main role="main">
+			<div class="container">
+				<h2><%= title %> </h2>
+				<table class="table table-bordered table-hover" style="width: 1440px;"><thead><tr><th style="" data-field="id"><div class="th-inner sortable both">ID</div><div class="fht-cell" style="width: 280px;"></div></th><th style="" data-field="name"><div class="th-inner sortable both desc">Item Name</div><div class="fht-cell" style="width: 594px;"></div></th><th style="" data-field="price"><div class="th-inner sortable both">Item Price</div><div class="fht-cell" style="width: 562px;"></div></th></tr></thead></table>
+			</div>
+		</main>
+		<%- include('partials/footer.ejs') %>
+		<%- include('imports/bootstrap-scripts.ejs') %> 
+	</body>		
 </html>

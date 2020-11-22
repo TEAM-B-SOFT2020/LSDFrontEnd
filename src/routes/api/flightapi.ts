@@ -1,7 +1,7 @@
 // libraries
 import * as express from 'express';
 
-import ContractMock from '../contract/ContractMock';
+import ContractMock from '../../contract/ContractMock';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 
 
