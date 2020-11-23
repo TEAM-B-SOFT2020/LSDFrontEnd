@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 	<head>
 		<%- include('imports/bootstrap') %>
 		<title>LSD Frontend</title>
 		<link href="style.css" rel="stylesheet" type="text/css" />
 	<head>
-	<body> 
+	<body class="d-flex flex-column h-100"> 
 		<%- include('partials/navbar.ejs', {active: "booking"})  %>
-		<main role="main">
+		<main role="main" class="flex-shrink-0">
 			<div class="container">
-        <h2>Hello from booking!</h2>
+				<h2>Hello from booking!</h2>
 
         <hr />        
         <h4>Find booking by id</h4>
@@ -29,14 +29,53 @@
 
         <hr />        
         <h4>Create Booking</h4>
-        <form action="/booking/get" method="POST">
-          <label for="header">Booking Id</label>
-          <input name="bookingId" type="string" placeholder="booking id" required />        
-         <input type="submit" />
+
+        
+        <form action="/booking/cancel" method="POST">
+          <div id="passenger-container">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="firstnameinput">First Name</label>
+                <input type="text" class="form-control" id="firstnameinput" name="passenger[1][first_name]">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="lastnameinput">Last Name</label>
+                <input type="text" class="form-control" id="lastnameinput" name="passenger[1][last_name]">
+              </div>
+            </div>
+          </div>
+          <a onclick="addPassengerToForm()"class="btn btn-link float-right" >[+] Add an extra passenger</a>
+          <div class="form-group">
+            <label for="inputAddress">Address</label>
+            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-      </div>      
+			</div>
 		</main>
 		<%- include('partials/footer.ejs') %>
-		<%- include('imports/bootstrap-scripts.ejs') %> 
+    <%- include('imports/bootstrap-scripts.ejs') %>
+    <script>
+      let i = 2;
+      function addPassengerToForm() {
+          let template = `
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="firstnameinput">First Name</label>
+                <input type="text" class="form-control" id="firstnameinput" name="passenger[${i}][first_name]">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="lastnameinput">Last Name</label>
+                <input type="text" class="form-control" id="lastnameinput" name="passenger[${i}][last_name]">
+              </div>
+          </div>
+          `;
+          let container = document.getElementById('passenger-container');
+          let div = document.createElement('div');
+          div.innerHTML = template;
+          container.appendChild(div);
+          i++;
+      }
+    </script>
 	</body>		
 </html>

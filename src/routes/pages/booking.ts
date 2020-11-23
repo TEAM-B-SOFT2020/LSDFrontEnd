@@ -6,7 +6,9 @@ import ContractMock from '../../contract/ContractMock';
 
 
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
+import IReservationDetail from 'contract/src/DTO/IReservationDetail';
 import { visitFunctionBody } from 'typescript';
+import IPassenger from 'contract/src/IPassenger';
 
 
 
@@ -42,19 +44,26 @@ router.post('/get', async (req, res) => {
 router.post('/cancel', async (req, res) => {
     // stephan syntax:: just a complex way to make a simple list    
     //Makes a mock of the ContractMock called mock
-    let bookingId: IBookingIdentifier = { id: req.body.bookingId };
-    await mock.cancelBooking(bookingId);
-    const content: object = {message: "Booking [" + bookingId.id + "] has been cancelled"};
+
+    let passengerList : IPassenger[] = req.body.passenger;
+    let reservationDetailList : IReservationDetail[] = [];
+
+
+    let reservationDetail : IReservationDetail = {
+        id: "123123",
+        passengers: passengerList
+    };
+    
+    String uniqueID = UUID.randomUUID().toString();
+
+    const booking = mock.createBooking(reservationDetailList, 12312312, 1213123)
+    const content: object = {message: "Hey"};
     res.render('partials/booking/cancelBooking', content);
 });
 
 router.post('/create', async (req, res) => {
-    // stephan syntax:: just a complex way to make a simple list    
-    //Makes a mock of the ContractMock called mock
-    let bookingId: IBookingIdentifier = { id: req.body.bookingId };
-    await mock.cancelBooking(bookingId);
-    const content: object = {message: "Booking has been cancelled: " + bookingId.id};
-    res.render('partials/booking/cancelBooking', content);
+    const content: object = {message: "Booking has been cancelled: "};
+    res.render('partials/booking/createBooking', content);
 });
 
 
