@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 	<head>
 		<%- include('../../imports/bootstrap') %>
 		<title>LSD Frontend</title>
-		<link href="../	style.css" rel="stylesheet" type="text/css" />
+		<link href="style.css" rel="stylesheet" type="text/css" />
 	<head>
-	<body> 
-		<%- include('../../partials/navbar.ejs', {active: "booking"})  %>
-		<main role="main">
+	<body class="d-flex flex-column h-100"> 
+		<%- include('../../partials/navbar.ejs', {active: "home"})  %>
+		<main role="main" class="flex-shrink-0">
 			<div class="container">
-				<h2>Cancel Booking</h2>
-				<p><%= message %></p>
+				<h2><%= message %></h2>
 			</div>
-
 		</main>
 		<%- include('../../partials/footer.ejs') %>
-		<%- include('../../imports/bootstrap-scripts') %> 
+		<%- include('../../imports/bootstrap-scripts.ejs') %> 
 	</body>		
 </html>

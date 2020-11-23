@@ -97,45 +97,57 @@ export default class ContractMock implements IContract{
         return new Promise((resolve, reject) => resolve(reservationSummary));        
     }
 
-    async createBooking(reservationDetails: IReservationDetail[], creditCardNumber: number, frequentFlyerNumber?: number): Promise<IBookingDetail> {    
-        throw new Error('Method not implemented.');   
+    async createBooking(reservationDetails: IReservationDetail[], creditCardNumber: number, frequentFlyerNumber?: number): Promise<IBookingDetail> {  
+        console.log("[CREATE BOOKING] : Info is being sent correctly, now we just have to handle it!")
+        console.log("[CREATE BOOKING] : Creadit Card Number: {0}\tFrequent Flyer Number: {1}", creditCardNumber, frequentFlyerNumber)
+        console.log("[CREATE BOOKING] : Reservation Details:")
+        reservationDetails.forEach(element => {
+            console.log(element);
+        });
+
+
+        return new Promise((resolve, reject) => resolve());      
     }
     async getBooking(id: IBookingIdentifier): Promise<IBookingDetail> {
-        const passenger1 : IFlightPassenger = {pnr:'1234',firstName:'Jonas',lastName:'Hein'};
-        const passenger2 : IFlightPassenger = {pnr:'2234',firstName:'Thomas',lastName:'Ebsen'};
+        try {
+            const passenger1 : IFlightPassenger = {pnr:'1234',firstName:'Jonas',lastName:'Hein'};
+            const passenger2 : IFlightPassenger = {pnr:'2234',firstName:'Thomas',lastName:'Ebsen'};
 
-        const passenger3 : IFlightPassenger = {pnr:'5678',firstName:'Andreas',lastName:'Jørgensen'};
-        const passenger4 : IFlightPassenger = {pnr:'6786',firstName:'Peter',lastName:'Nielsen'};
+            const passenger3 : IFlightPassenger = {pnr:'5678',firstName:'Andreas',lastName:'Jørgensen'};
+            const passenger4 : IFlightPassenger = {pnr:'6786',firstName:'Peter',lastName:'Nielsen'};
 
-        const carrier: ICarrierDetail = { iata: 'SAS-412', name: 'SAS' };
-        const departureAirport: IAirportIdentifier = { iata: 'Gatwick' };
-        const arrivalAirport: IAirportIdentifier = { iata: 'Heathrow' };
-        const passengers : IFlightPassenger[] = [passenger1,passenger2, passenger3, passenger4];
-        const flightBooking1 : IFlightBookingDetail = {passengers : passengers,carrier,departureDate: 5,arrivalDate: 10,arrivalAirport : arrivalAirport,departureAirport : departureAirport,flightCode: 'bdc123'};
-        const flightBooking2 : IFlightBookingDetail = {passengers : passengers,carrier,departureDate: 5,arrivalDate: 10,arrivalAirport : arrivalAirport,departureAirport : departureAirport,flightCode: 'bdc123'};
-        const flightBookings : IFlightBookingDetail[] = [flightBooking1,flightBooking2];
+            const carrier: ICarrierDetail = { iata: 'SAS-412', name: 'SAS' };
+            const departureAirport: IAirportIdentifier = { iata: 'Gatwick' };
+            const arrivalAirport: IAirportIdentifier = { iata: 'Heathrow' };
+            const passengers : IFlightPassenger[] = [passenger1,passenger2, passenger3, passenger4];
+            const flightBooking1 : IFlightBookingDetail = {passengers : passengers,carrier,departureDate: 5,arrivalDate: 10,arrivalAirport : arrivalAirport,departureAirport : departureAirport,flightCode: 'bdc123'};
+            const flightBooking2 : IFlightBookingDetail = {passengers : passengers,carrier,departureDate: 5,arrivalDate: 10,arrivalAirport : arrivalAirport,departureAirport : departureAirport,flightCode: 'bdc123'};
+            const flightBookings : IFlightBookingDetail[] = [flightBooking1,flightBooking2];
 
-        const bookingDetail: IBookingDetail = {
-            flightBookings,
-            id:"1234",
-            frequentFlyerId : "123AX4",
-            creditCardNumber : 22334455,
-            price: 5000,
-        };
+            const bookingDetail: IBookingDetail = {
+                flightBookings,
+                id:"1234",
+                frequentFlyerId : "123AX4",
+                creditCardNumber : 22334455,
+                price: 5000,
+            };
 
-        
-        const bookingDetail2: IBookingDetail = {
-            flightBookings,
-            id:"4567",
-            frequentFlyerId : "673DV",
-            creditCardNumber : 9994569,
-            price: 4600,
-        };
+            
+            const bookingDetail2: IBookingDetail = {
+                flightBookings,
+                id:"4567",
+                frequentFlyerId : "673DV",
+                creditCardNumber : 9994569,
+                price: 4600,
+            };
 
 
-        const allbookings: IBookingDetail[] = [bookingDetail, bookingDetail2];
-        let availableBooking = allbookings.find(booking => booking.id === id.id)
-        return new Promise((resolve, reject) => resolve(availableBooking));
+            const allbookings: IBookingDetail[] = [bookingDetail, bookingDetail2];
+            let availableBooking = allbookings.find(booking => booking.id === id.id)
+            return new Promise((resolve, reject) => resolve(availableBooking));
+        } catch (error) {
+            return new Promise((resolve, reject) => reject());
+        }
     }
 
     async cancelBooking(id: IBookingIdentifier): Promise<void> {

@@ -1,10 +1,9 @@
 // libraries
 import * as express from 'express';
 import * as contract from 'contract';
+import { uuid } from 'uuidv4';
 
 import ContractMock from '../../contract/ContractMock';
-
-
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 import IReservationDetail from 'contract/src/DTO/IReservationDetail';
 import { visitFunctionBody } from 'typescript';
@@ -41,29 +40,30 @@ router.post('/get', async (req, res) => {
     res.render('partials/booking/getBooking', content);
 });
 
-router.post('/cancel', async (req, res) => {
+router.post('/create', async (req, res) => {
     // stephan syntax:: just a complex way to make a simple list    
     //Makes a mock of the ContractMock called mock
 
     let passengerList : IPassenger[] = req.body.passenger;
+    console.log(passengerList.length)
     let reservationDetailList : IReservationDetail[] = [];
-
-
     let reservationDetail : IReservationDetail = {
-        id: "123123",
+        id: uuid(), //Generate a random id
         passengers: passengerList
-    };
-    
-    String uniqueID = UUID.randomUUID().toString();
+    };    reservationDetailList.push(reservationDetail)
 
     const booking = mock.createBooking(reservationDetailList, 12312312, 1213123)
-    const content: object = {message: "Hey"};
-    res.render('partials/booking/cancelBooking', content);
+    const content: object = {message: "Booking has been created", booking};
+    res.render('partials/booking/createBooking', content);
 });
 
-router.post('/create', async (req, res) => {
-    const content: object = {message: "Booking has been cancelled: "};
-    res.render('partials/booking/createBooking', content);
+router.post('/cancel', async (req, res) => {
+    // stephan syntax:: just a complex way to make a simple list    
+    //Makes a mock of the ContractMock called mock
+    let bookingId: IBookingIdentifier = { id: req.body.bookingId };
+    await mock.cancelBooking(bookingId);
+    const content: object = {message: "Booking [" + bookingId.id + "] has been cancelled"};
+    res.render('partials/booking/cancelBooking', content);
 });
 
 
