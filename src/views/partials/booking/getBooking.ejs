@@ -27,27 +27,28 @@
 								  </tr>
 							</thead>
 							<tbody>
-							  <% booking.flightBookings.forEach((IFlightBookingDetail) => { %>
+							  <% booking.flightBookings.forEach((data) => { %>
 								<tr text->
 								  <td><%= booking.id %></td>
 								  <td><%= booking.price %>DKK</td>
-									<td><%= IFlightBookingDetail.arrivalAirport.iata %></td>
-									<td><%= IFlightBookingDetail.departureAirport.iata %></td>
-									<td><%= IFlightBookingDetail.flightCode %></td>         
-									<% if (IFlightBookingDetail.passengers.length) { %>			
+									<td><%= data.arrivalAirport.iata %></td>
+									<td><%= data.departureAirport.iata %></td>
+									<td><%= data.flightCode %></td>     
+									<% if (data.passengers) { %>			
 									  <td class="text-left">
 										<ul class="list-group">
-										  <% IFlightBookingDetail.passengers.forEach((IFlightPassenger) => { %>    
-											<li style="border: 0; padding: 2px;" class="list-group-item"><%= IFlightPassenger.pnr %></li>
+										  <% data.passengers.forEach((data2) => { %>    
+											<h2><%= data2.length %></h2>
+											<li style="border: 0; padding: 2px;" class="list-group-item"><%= data2.pnr %></li>
 										  <% })%>
 										</ul>
 									  </td>
 									<%}%>
-									<% if (IFlightBookingDetail.passengers.length) { %>			
+									<% if (data.passengers.length) { %>			
 										<td class="text-left">
 										  <ul class="list-group">
-											<% IFlightBookingDetail.passengers.forEach((IFlightPassenger) => { %>    
-											  <li style="border: 0; padding: 2px;" class="list-group-item"><%= IFlightPassenger.lastName %>, <%= IFlightPassenger.firstName %></li>
+											<% data.passengers.forEach((data2) => { %>    
+											  <li style="border: 0; padding: 2px;" class="list-group-item"><%= data2.last_name %>, <%= data2.first_name %></li>
 											<% })%>
 										  </ul>
 										</td>

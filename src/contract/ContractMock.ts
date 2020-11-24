@@ -17,8 +17,8 @@ import { ResolvedTypeReferenceDirective } from 'typescript';
 import { uuid } from 'uuidv4';
 
 
-const bookingList: IBookingDetail[] = [];
-const flightList: IFlightSummary[] = [];
+const _BOOKINGLIST: IBookingDetail[] = [];
+const _FLIGHTLIST: IFlightSummary[] = [];
 
 export default class ContractMock implements IContract{
     async getCarrierInformation(iata: string): Promise<ICarrierDetail> {       
@@ -112,8 +112,8 @@ export default class ContractMock implements IContract{
 			flightCode: 'bcd123',
 		};
 
-		flightList.push(flight1, flight2, flight3, flight4);
-		return new Promise((resolve, reject) => resolve(flightList));
+		_FLIGHTLIST.push(flight1, flight2, flight3, flight4);
+		return new Promise((resolve, reject) => resolve(_FLIGHTLIST));
     }
     async reserveFlight(id: IFlightIdentifier, amountSeats: number): Promise<IReservationSummary> {
         const flight: IFlightIdentifier = {flightCode:''};
@@ -130,80 +130,43 @@ export default class ContractMock implements IContract{
         console.log("[CREATE BOOKING] : Creadit Card Number: " + creditCardNumber + "\tFrequent Flyer Number: " + frequentFlyerNumber)
         console.log("[CREATE BOOKING] : Reservation Details:")
 
-        /*var flightBookings : IFlightBookingDetail[] = []        
+        var flightBookings : IFlightBookingDetail[] = []        
         var flightPassengers : IFlightPassenger[] = [];
 
 
-        var pass : IPassenger[];
+        var passList : IPassenger[] = [];
+        reservationDetails.map(x => {
+            passList = Object.assign(passList, x.passengers)
+        })
 
-        var func = reservationDetails.map(x => (
-            x.passengers
-        ));
+       flightPassengers = Object.assign(flightPassengers, passList);
+       flightPassengers.forEach(x => {
+           x.pnr = uuid()
+       });      
 
-        pass = func[0];
-        console.log(pass)
-        
-        var ipas : IPassenger[] = [{firstName : "Thomas", lastName : "Ebsen"}, {firstName : "Jonas", lastName : "Hein"}];        
-        flightPassengers = pass.map(x => (
-            {pnr: "123", firstName: x.firstName, lastName: x.lastName}
-        ));
-
-        console.log(flightPassengers)
-
-        
-
+       
+       //Hardcoded Carrier
+       const carrier: ICarrierDetail = { iata: 'SAS-412', name: 'SAS' };
+       const departureAirport: IAirportIdentifier = { iata: 'Gatwick' };
+       const arrivalAirport: IAirportIdentifier = { iata: 'Heathrow' };
+       const flightBooking1 : IFlightBookingDetail = {passengers : flightPassengers,carrier,departureDate: 5,arrivalDate: 10,arrivalAirport : arrivalAirport,departureAirport : departureAirport,flightCode: 'bdc123'};
+       
+       flightBookings.push(flightBooking1);
 
         const bookingDetail: IBookingDetail = {
             flightBookings,
-            id:"1234",
+            id: uuid(),
             frequentFlyerId : "123AX4",
             creditCardNumber : 22334455,
             price: 5000,
         };
 
-
-        //bookingList.push(reservationDetails)
-
-        */
-
-        return new Promise((resolve, reject) => resolve());      
+        _BOOKINGLIST.push(bookingDetail);
+        return new Promise((resolve, reject) => resolve(bookingDetail));      
     }
     async getBooking(id: IBookingIdentifier): Promise<IBookingDetail> {
         try {
-            const passenger1 : IFlightPassenger = {pnr:'1234',firstName:'Jonas',lastName:'Hein'};
-            const passenger2 : IFlightPassenger = {pnr:'2234',firstName:'Thomas',lastName:'Ebsen'};
-
-            const passenger3 : IFlightPassenger = {pnr:'5678',firstName:'Andreas',lastName:'Jørgensen'};
-            const passenger4 : IFlightPassenger = {pnr:'6786',firstName:'Peter',lastName:'Nielsen'};
-
-            const carrier: ICarrierDetail = { iata: 'SAS-412', name: 'SAS' };
-            const departureAirport: IAirportIdentifier = { iata: 'Gatwick' };
-            const arrivalAirport: IAirportIdentifier = { iata: 'Heathrow' };
-            const passengers : IFlightPassenger[] = [passenger1,passenger2, passenger3, passenger4];
-            const flightBooking1 : IFlightBookingDetail = {passengers : passengers,carrier,departureDate: 5,arrivalDate: 10,arrivalAirport : arrivalAirport,departureAirport : departureAirport,flightCode: 'bdc123'};
-            const flightBooking2 : IFlightBookingDetail = {passengers : passengers,carrier,departureDate: 5,arrivalDate: 10,arrivalAirport : arrivalAirport,departureAirport : departureAirport,flightCode: 'bdc123'};
-            const flightBookings : IFlightBookingDetail[] = [flightBooking1,flightBooking2];
-
-            const bookingDetail: IBookingDetail = {
-                flightBookings,
-                id:"1234",
-                frequentFlyerId : "123AX4",
-                creditCardNumber : 22334455,
-                price: 5000,
-            };
-
-            
-            const bookingDetail2: IBookingDetail = {
-                flightBookings,
-                id:"4567",
-                frequentFlyerId : "673DV",
-                creditCardNumber : 9994569,
-                price: 4600,
-            };
-
-
-            bookingList.push(bookingDetail, bookingDetail2);
-            let availableBooking = bookingList.find(booking => booking.id === id.id)
+            let availableBooking = _BOOKINGLIST.find(booking => booking.id === id.id)
             return new Promise((resolve, reject) => resolve(availableBooking));
         } catch (error) {
             return new Promise((resolve, reject) => reject());
@@ -212,15 +175,14 @@ export default class ContractMock implements IContract{
 
     async cancelBooking(id: IBookingIdentifier): Promise<void> {
         try {
-            console.log(bookingList);
-            var index = bookingList.findIndex(function(x) {
+            console.log(_BOOKINGLIST);
+            var index = _BOOKINGLIST.findIndex(function(x) {
                 return x.id === id.id;
             })
             if(index !== -1) {
-                bookingList.splice(index, 1);
+                _BOOKINGLIST.splice(index, 1);
             }
-            console.log("ssssssssss")
-            console.log(bookingList);
+            console.log(_BOOKINGLIST);
 
             return new Promise((resolve, reject) => resolve());
         } catch (error) {

@@ -8,6 +8,7 @@ import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 import IReservationDetail from 'contract/src/DTO/IReservationDetail';
 import { visitFunctionBody } from 'typescript';
 import IPassenger from 'contract/src/IPassenger';
+import IFlightPassenger from 'contract/src/DTO/IFlightPassenger';
 
 
 
@@ -37,6 +38,12 @@ router.post('/get', async (req, res) => {
     let bookingId: IBookingIdentifier = { id: req.body.bookingId };
     const booking = await mock.getBooking(bookingId);
     const content: object = {booking};
+
+    booking.flightBookings.forEach(element => {
+        console.log(element.passengers)
+    });
+
+   // console.log(booking)
     res.render('partials/booking/getBooking', content);
 });
 
@@ -49,9 +56,13 @@ router.post('/create', async (req, res) => {
     let reservationDetail : IReservationDetail = {
         id: uuid(), //Generate a random id
         passengers: passengerList
-    };    reservationDetailList.push(reservationDetail)
+    }; 
+    reservationDetailList.push(reservationDetail)
 
-    const booking = mock.createBooking(reservationDetailList, 12312312, 1213123)
+    const booking = await mock.createBooking(reservationDetailList, 12312312, 1213123)
+    booking.flightBookings.forEach(element => {
+        //console.log(element)
+    });
     const content: object = {message: "Booking has been created", booking};
     res.render('partials/booking/createBooking', content);
 });
