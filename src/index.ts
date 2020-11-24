@@ -12,6 +12,7 @@ import carriers from './routes/pages/carriers';
 import booking from './routes/pages/booking';
 import flightapi from './routes/api/flightapi';
 import api from './routes/api/api';
+import airports from './routes/pages/airports';
 
 // environments variables -> .env
 const port: any = process.env.PORT;
@@ -25,7 +26,7 @@ app.use('/', views);
 app.use('/flights', flights);
 app.use('/carriers', carriers);
 app.use('/booking', booking);
-
+app.use('/airports', airports);
 
 app.use('/api', api);
 app.use('/api/flights', flightapi);
