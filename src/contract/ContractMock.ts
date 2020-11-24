@@ -23,12 +23,32 @@ export default class ContractMock implements IContract{
 
 
     async getAirportInformation(iata: string): Promise<IAirportDetail> {
-        const airportDetails: IAirportDetail ={
+        try {
+            const airportDetails0: IAirportDetail ={
+                iata: "*",
+                name: "Search airport",
+                timeZone: "GMT+1"
+            }
+
+        const airportDetails1: IAirportDetail ={
+            iata: "lol",
+            name: "lolland",
+            timeZone: "GMT+1"}
+
+
+        const airportDetails2: IAirportDetail ={
             iata: "CPH",
             name: "Copenhagen",
             timeZone: "GMT+1"
         }
-        return new Promise((resolve, reject) => resolve(airportDetails))
+        const allairportDetails: IAirportDetail[] = [airportDetails0,airportDetails1, airportDetails2];
+        let airportDetails = allairportDetails.find(airport => airport.iata === iata)
+        return new Promise((resolve, reject) => resolve(airportDetails));
+
+    }
+    catch(error){
+        return new Promise((resolve, reject) => reject());
+    }
     }
 
 
@@ -158,6 +178,4 @@ export default class ContractMock implements IContract{
             return new Promise((resolve, reject) => reject());
         }
     }
-
-
 }

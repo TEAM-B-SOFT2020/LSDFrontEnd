@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+	<head>
+		<%- include('imports/bootstrap') %>
+		<title>LSD Frontend</title>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+	<head>
+	<body class="d-flex flex-column h-100"> 
+		<%- include('partials/navbar.ejs', {active: "airports"})  %>
+		<main role="main" class="flex-shrink-0">
+			<div class="container">
+                <h4>Find airport by id</h4>
+                <form action="/airports/get" method="POST">
+                    <label for="header">Airport IATA</label>
+                    <input name="iata" type="string" placeholder="iata code" required />        
+                   <input type="submit" />
+                  </form>
+				<ul class="list-group">
+					<li class="list-group-item">
+                        <% if(airport){ %>
+                            <%= airport.name %>
+                        <% } else { %>
+                            <p>Found no airport...</p>
+                        <% } %>
+					</li>
+                </ul>
+			</div>
+		</main>
+		<%- include('partials/footer.ejs') %>
+		<%- include('imports/bootstrap-scripts.ejs') %> 
+	</body>		
+</html>
