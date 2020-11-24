@@ -45,7 +45,6 @@ router.post('/create', async (req, res) => {
     //Makes a mock of the ContractMock called mock
 
     let passengerList : IPassenger[] = req.body.passenger;
-    console.log(passengerList.length)
     let reservationDetailList : IReservationDetail[] = [];
     let reservationDetail : IReservationDetail = {
         id: uuid(), //Generate a random id

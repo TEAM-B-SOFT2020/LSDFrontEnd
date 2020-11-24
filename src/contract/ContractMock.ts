@@ -10,10 +10,18 @@ import IReservationSummary from 'contract/src/DTO/IReservationSummary';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
+import IPassenger from 'contract/src/IPassenger';
+import { lstat } from 'fs';
+import { PassThrough } from 'stream';
+import { ResolvedTypeReferenceDirective } from 'typescript';
+import { uuid } from 'uuidv4';
+
+
+const bookingList: IBookingDetail[] = [];
+const flightList: IFlightSummary[] = [];
 
 export default class ContractMock implements IContract{
-    async getCarrierInformation(iata: string): Promise<ICarrierDetail> {
-       
+    async getCarrierInformation(iata: string): Promise<ICarrierDetail> {       
         const carrierDetail: ICarrierDetail ={
         iata: "SAS140",
         name: 'SAS'
@@ -84,8 +92,8 @@ export default class ContractMock implements IContract{
 			flightCode: 'bcd123',
 		};
 
-		const flightSummaries: IFlightSummary[] = [flight1, flight2, flight3, flight4];
-		return new Promise((resolve, reject) => resolve(flightSummaries));
+		flightList.push(flight1, flight2, flight3, flight4);
+		return new Promise((resolve, reject) => resolve(flightList));
     }
     async reserveFlight(id: IFlightIdentifier, amountSeats: number): Promise<IReservationSummary> {
         const flight: IFlightIdentifier = {flightCode:''};
@@ -99,12 +107,44 @@ export default class ContractMock implements IContract{
 
     async createBooking(reservationDetails: IReservationDetail[], creditCardNumber: number, frequentFlyerNumber?: number): Promise<IBookingDetail> {  
         console.log("[CREATE BOOKING] : Info is being sent correctly, now we just have to handle it!")
-        console.log("[CREATE BOOKING] : Creadit Card Number: {0}\tFrequent Flyer Number: {1}", creditCardNumber, frequentFlyerNumber)
+        console.log("[CREATE BOOKING] : Creadit Card Number: " + creditCardNumber + "\tFrequent Flyer Number: " + frequentFlyerNumber)
         console.log("[CREATE BOOKING] : Reservation Details:")
-        reservationDetails.forEach(element => {
-            console.log(element);
-        });
 
+        /*var flightBookings : IFlightBookingDetail[] = []        
+        var flightPassengers : IFlightPassenger[] = [];
+
+
+        var pass : IPassenger[];
+
+        var func = reservationDetails.map(x => (
+            x.passengers
+        ));
+
+        pass = func[0];
+        console.log(pass)
+        
+        var ipas : IPassenger[] = [{firstName : "Thomas", lastName : "Ebsen"}, {firstName : "Jonas", lastName : "Hein"}];        
+        flightPassengers = pass.map(x => (
+            {pnr: "123", firstName: x.firstName, lastName: x.lastName}
+        ));
+
+        console.log(flightPassengers)
+
+        
+
+
+        const bookingDetail: IBookingDetail = {
+            flightBookings,
+            id:"1234",
+            frequentFlyerId : "123AX4",
+            creditCardNumber : 22334455,
+            price: 5000,
+        };
+
+
+        //bookingList.push(reservationDetails)
+
+        */
 
         return new Promise((resolve, reject) => resolve());      
     }
@@ -142,8 +182,8 @@ export default class ContractMock implements IContract{
             };
 
 
-            const allbookings: IBookingDetail[] = [bookingDetail, bookingDetail2];
-            let availableBooking = allbookings.find(booking => booking.id === id.id)
+            bookingList.push(bookingDetail, bookingDetail2);
+            let availableBooking = bookingList.find(booking => booking.id === id.id)
             return new Promise((resolve, reject) => resolve(availableBooking));
         } catch (error) {
             return new Promise((resolve, reject) => reject());
@@ -152,7 +192,16 @@ export default class ContractMock implements IContract{
 
     async cancelBooking(id: IBookingIdentifier): Promise<void> {
         try {
-            //Find booking with id
+            console.log(bookingList);
+            var index = bookingList.findIndex(function(x) {
+                return x.id === id.id;
+            })
+            if(index !== -1) {
+                bookingList.splice(index, 1);
+            }
+            console.log("ssssssssss")
+            console.log(bookingList);
+
             return new Promise((resolve, reject) => resolve());
         } catch (error) {
             return new Promise((resolve, reject) => reject());
