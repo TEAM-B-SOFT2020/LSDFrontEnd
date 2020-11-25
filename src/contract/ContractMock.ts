@@ -20,8 +20,8 @@ const _FLIGHTLIST: IFlightSummary[] = [];
 const _RESERVATIONS : IReservationSummary[] = [];
 
 export default class ContractMock implements IContract{
-        async getCarrierInformation(iata: string): Promise<ICarrierDetail> {       
-            try {
+        async getCarrierInformation(iata: string): Promise<ICarrierDetail> {     
+               
         const carrierDetail0: ICarrierDetail ={
         iata: "SAS140",
         name: 'SAS'
@@ -35,14 +35,14 @@ export default class ContractMock implements IContract{
         iata: "SS150",
         name: 'Sunset'
        }
-
+    try {  
        const allcarrierDetail: ICarrierDetail[] = [carrierDetail0,carrierDetail1,carrierDetail2];
        let carrierDetail = allcarrierDetail.find(carrier => carrier.iata.toLocaleLowerCase() === iata.toLocaleLowerCase())
-
+       if(!carrierDetail){return new Promise((resolve, reject) => reject('Carrier Not Found'));}
        return new Promise((resolve, reject) => resolve(carrierDetail))
     }
     catch(error){
-        return new Promise((resolve, reject) => reject());
+        return new Promise((resolve, reject) => reject('No connection to the database'));
     }
     }
 

@@ -8,10 +8,10 @@ const contract: IContract = new Contract();
 
 
 // creates a block that groups together several related tests
-describe('Example Test for Github Actions', () => {
+describe('getAirportInformation: EXPECT SUCCESS', () => {
 	// runs the test
 	test('True should be truthy', async () => {
-		let result = await (await contract.getAirportInformation('lol'));
+		let result = await contract.getAirportInformation('lol');
 		const expected: IAirportDetail = {iata: 'lol', name: 'lolland', timeZone:'GMT+1'} ;	
 		expect(expected).toEqual(result);
 	});
