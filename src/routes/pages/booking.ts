@@ -10,6 +10,7 @@ import { visitFunctionBody } from 'typescript';
 import IPassenger from 'contract/src/IPassenger';
 import IFlightPassenger from 'contract/src/DTO/IFlightPassenger';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
+import IFlightIdentifier from 'contract/src/IFlightIdentifier';
 
 
 
@@ -41,38 +42,51 @@ router.post('/get', async (req, res) => {
     res.render('partials/booking/getBooking', content);
 });
 
+router.post('/flight', async (req, res) => {
+    const departureAirport : IAirportIdentifier = {iata: req.body.departureAirport}
+    const arrivalAirport : IAirportIdentifier = {iata: req.body.arrivalAirport}
+    const departureDate : number  = req.body.departureDate;
+    const availableFlights = await mock.getFlightsAvailable(departureAirport, arrivalAirport, departureDate);
+    console.log("====== FLIGHTS AVAILABLE ====")
+    console.log(availableFlights);
+    const content: object = {availableFlights};
+    res.render('partials/booking/chooseFlight', content);
+});
+
+
+router.post('/reserve', async (req, res) => {
+    let obj = JSON.parse(req.body.flight);
+    const flight : IFlightIdentifier = {
+        flightCode : obj.flightCode
+    }
+    const seatCost = obj.seatPrice;
+    const reservation = await mock.reserveFlight(flight, seatCost);
+    const content: object = {message: "Reservation Success", reservation};
+    console.log("========= FLIGHT RESERVED ======")
+    console.log(reservation);
+    res.render('partials/booking/createBooking', content);
+});
+
 router.post('/create', async (req, res) => {
     // stephan syntax:: just a complex way to make a simple list    
     //Makes a mock of the ContractMock called mock
-
+    console.log("=======================")
     console.log(req.body);
-
     let passengerList : IPassenger[] = req.body.passenger;
     let reservationDetailList : IReservationDetail[] = [];
     let reservationDetail : IReservationDetail = {
-        id: uuid(), //Generate a random id
+        id: req.body.reservationId,
         passengers: passengerList
     }; 
     reservationDetailList.push(reservationDetail)
 
-    const booking = await mock.createBooking(reservationDetailList, 12312312, 1213123)
+    const booking = await mock.createBooking(reservationDetailList, 12312312, 1213123);
+    console.log("===== BOOOKING CREATED ==========")
+    console.log(booking)
     const content: object = {message: "Booking has been created", booking};
-    res.render('partials/booking/createBooking', content);
+    //res.render('partials/booking/bookingSuccess', content);
 });
 
-router.post('/reserve', async (req, res) => {
-
-    let departureAirport : IAirportIdentifier = {iata: req.body.departureAirport}
-    let arrivalAirport : IAirportIdentifier = {iata: req.body.arrivalAirport}
-    let departureDate : number  = req.body.departureDate;
-    const availableFlights = await mock.getFlightsAvailable(departureAirport, arrivalAirport, departureDate)
-    const reservation = await mock.reserveFlight(availableFlights[0], 500);
-    console.log(reservation);
-    console.log(availableFlights);
-
-    const content: object = {message: "Reservation Success", reservation : "123-ABC"};
-    res.render('partials/booking/createBooking', content);
-});
 
 router.post('/cancel', async (req, res) => {
     // stephan syntax:: just a complex way to make a simple list    

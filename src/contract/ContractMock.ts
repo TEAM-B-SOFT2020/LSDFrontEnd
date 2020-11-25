@@ -19,6 +19,7 @@ import { uuid } from 'uuidv4';
 
 const _BOOKINGLIST: IBookingDetail[] = [];
 const _FLIGHTLIST: IFlightSummary[] = [];
+const _RESERVATIONS : IReservationSummary[] = [];
 
 export default class ContractMock implements IContract{
     async getCarrierInformation(iata: string): Promise<ICarrierDetail> {       
@@ -137,26 +138,29 @@ export default class ContractMock implements IContract{
 			availableSeats: 100,
 			seatPrice: 2500,
 			flightCode: 'bcd123',
-		};
+        };
+        
+        if(_FLIGHTLIST.length == 0) {
+            _FLIGHTLIST.push(flight1, flight2, flight3, flight4);   
+        }
 
-        _FLIGHTLIST.push(flight1, flight2, flight3, flight4);        
         let availableFlightList = _FLIGHTLIST.filter(airport => airport.departureAirport.iata == departure.iata && airport.arrivalAirport.iata == arrival.iata && airport.departureDate == departDateUnix);
 		return new Promise((resolve, reject) => resolve(availableFlightList));
     }
     async reserveFlight(id: IFlightIdentifier, amountSeats: number): Promise<IReservationSummary> {
-        const flight: IFlightIdentifier = {flightCode:''};
         const reservationSummary: IReservationSummary= {
-            id: '2',
-            price: 500*amountSeats
+            id: uuid(),
+            price: amountSeats
         };
-
+        _RESERVATIONS.push(reservationSummary);
         return new Promise((resolve, reject) => resolve(reservationSummary));        
     }
 
     async createBooking(reservationDetails: IReservationDetail[], creditCardNumber: number, frequentFlyerNumber?: number): Promise<IBookingDetail> {  
         console.log("[CREATE BOOKING] : Info is being sent correctly, now we just have to handle it!")
         console.log("[CREATE BOOKING] : Creadit Card Number: " + creditCardNumber + "\tFrequent Flyer Number: " + frequentFlyerNumber)
-        console.log("[CREATE BOOKING] : Reservation Details:")
+        console.log("[CREATE BOOKING] : Reservation Details:");
+
 
         var flightBookings : IFlightBookingDetail[] = []        
         var flightPassengers : IFlightPassenger[] = [];
@@ -170,8 +174,7 @@ export default class ContractMock implements IContract{
        flightPassengers = Object.assign(flightPassengers, passList);
        flightPassengers.forEach(x => {
            x.pnr = uuid()
-       });      
-
+       });
        
        //Hardcoded Carrier
        const carrier: ICarrierDetail = { iata: 'SAS-412', name: 'SAS' };
@@ -203,15 +206,12 @@ export default class ContractMock implements IContract{
 
     async cancelBooking(id: IBookingIdentifier): Promise<void> {
         try {
-            console.log(_BOOKINGLIST);
             var index = _BOOKINGLIST.findIndex(function(x) {
                 return x.id === id.id;
             })
             if(index !== -1) {
                 _BOOKINGLIST.splice(index, 1);
             }
-            console.log(_BOOKINGLIST);
-
             return new Promise((resolve, reject) => resolve());
         } catch (error) {
             return new Promise((resolve, reject) => reject());

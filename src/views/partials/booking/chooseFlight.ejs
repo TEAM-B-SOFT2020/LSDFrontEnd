@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+	<head>
+		<%- include('../../imports/bootstrap') %>
+		<title>LSD Frontend</title>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+		<style>
+			.bloc {
+				display: inline-block;
+				vertical-align: top;
+				overflow: hidden;
+				}
+
+				.bloc select {
+				padding: 4px;
+				margin: -5px -20px -5px -5px;
+			}
+</style>
+	<head>
+	<body class="d-flex flex-column h-100"> 
+		<%- include('../../partials/navbar.ejs', {active: "home"})  %>
+		<main role="main" class="flex-shrink-0">
+			<div class="container">
+                <h2>Found <%= availableFlights.length %> available flights</h2>
+				<form action="/booking/reserve" method="POST">
+					<div class="form-group" style="margin-bottom: 0px;">
+						<div class="bloc">
+							<select name="flight" size=<%= availableFlights.length %>>
+								<% availableFlights.forEach((data) => { %>
+									<option class="form-check-label" value='{"flightCode" : "<%= data.flightCode %>", "seatPrice" : "<%= data.seatPrice %>"}'>
+										<p><%= data.departureAirport.iata %></p>
+										<p><%= data.arrivalAirport.iata %></p>
+										<p><%= data.carrier.aita %> : <%= data.carrier.name %></p>
+										<p><%= data.departureDate %></p>
+									</option>
+		
+								<% }) %>
+							</select>	
+					  </div>
+					</div>
+					  <button type="submit">Next</button>
+				</form>
+			</div>
+		</main>
+		<%- include('../../partials/footer.ejs') %>
+		<%- include('../../imports/bootstrap-scripts.ejs') %> 
+	</body>		
+</html>
