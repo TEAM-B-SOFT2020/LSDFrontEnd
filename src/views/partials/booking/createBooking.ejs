@@ -10,10 +10,79 @@
 		<main role="main" class="flex-shrink-0">
 			<div class="container">
 				<h2><%= message %></h2>
-				<p><%= booking.id %>	</p>
+			
+				
+
+
+
+				<form action="/booking/create" method="POST">
+					<div id="flight-container" class="mb-4">
+					  <h5 class="text-center mb-4">Destination</h3>
+					  <div class="form-row">
+						<div class="form-group col-md-3">
+						  <label for="emailInput">Departure Airport</label>
+						  <input type="text" class="form-control" id="departureAirportInput" placeholder="Departure IATA" required name="departureAirport">
+						</div>
+						<div class="form-group col-md-3">
+						  <label for="emailInput">Arrival Airport</label>
+						  <input type="text" class="form-control" id="arrivalAirportInput" placeholder="Arrival IATA" required name="arrivalAirport">
+						</div>
+						<div class="form-group col-md-3">
+						  <label for="emailInput">Departure Date</label>
+						  <input type="date" class="form-control" id="arrivalDateInput" placeholder="Arrival" required name="arrivalDate">
+						</div>
+						<div class="form-group col-md-3">
+						  <label for="emailInput">Arrival Date</label>
+						  <input type="date" class="form-control" id="arrivalDateOutput" placeholder="Arrival" required name="departureDate">
+						</div>
+					  </div>
+					</div>
+		  
+					<div id="passenger-container">
+					  <h5 class="text-center mb-4">Destination</h3>
+					  <div class="form-row">
+						<div class="form-group col-md-6">
+						  <label for="firstnameInput">First Name</label>
+						  <input type="text" class="form-control" id="firstnameinput" placeholder="Firstname" required name="passenger[1][first_name]">
+						</div>
+						<div class="form-group col-md-6">
+						  <label for="lastnameInput">Last Name</label>
+						  <input type="text" class="form-control" id="lastnameinput" placeholder="Lastname" required autocomplete="false" name="passenger[1][last_name]">
+						</div>
+					  </div>
+					</div>
+					<input type="hidden" value=<%= reservation %>>
+					<a onclick="addPassengerToForm()"class="btn btn-link float-right" >[+] Add an extra passenger</a>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				  </form>
+
+
+
 			</div>
 		</main>
 		<%- include('../../partials/footer.ejs') %>
-		<%- include('../../imports/bootstrap-scripts.ejs') %> 
+		<%- include('../../imports/bootstrap-scripts.ejs') %>
+		<script>
+			let i = 2;
+			function addPassengerToForm() {
+				let template = `
+				  <div class="form-row">
+					  <div class="form-group col-md-6">
+						<label for="firstnameInput">First Name</label>
+						<input type="text" class="form-control" id="firstnameinput" placeholder="Firstname" required name="passenger[${i}][first_name]">
+					  </div>
+					  <div class="form-group col-md-6">
+						<label for="lastnameInput">Last Name</label>
+						<input type="text" class="form-control" id="lastnameinput" placeholder="Lastname" required autocomplete="false" name="passenger[${i}][last_name]">
+					  </div>
+					</div>
+				`;
+				let container = document.getElementById('passenger-container');
+				let div = document.createElement('div');
+				div.innerHTML = template;
+				container.appendChild(div);
+				i++;
+			}
+		  </script>
 	</body>		
 </html>

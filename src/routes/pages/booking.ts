@@ -9,7 +9,7 @@ import IReservationDetail from 'contract/src/DTO/IReservationDetail';
 import { visitFunctionBody } from 'typescript';
 import IPassenger from 'contract/src/IPassenger';
 import IFlightPassenger from 'contract/src/DTO/IFlightPassenger';
-
+import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 
 
 
@@ -38,18 +38,14 @@ router.post('/get', async (req, res) => {
     let bookingId: IBookingIdentifier = { id: req.body.bookingId };
     const booking = await mock.getBooking(bookingId);
     const content: object = {booking};
-
-    booking.flightBookings.forEach(element => {
-        console.log(element.passengers)
-    });
-
-   // console.log(booking)
     res.render('partials/booking/getBooking', content);
 });
 
 router.post('/create', async (req, res) => {
     // stephan syntax:: just a complex way to make a simple list    
     //Makes a mock of the ContractMock called mock
+
+    console.log(req.body);
 
     let passengerList : IPassenger[] = req.body.passenger;
     let reservationDetailList : IReservationDetail[] = [];
@@ -60,10 +56,19 @@ router.post('/create', async (req, res) => {
     reservationDetailList.push(reservationDetail)
 
     const booking = await mock.createBooking(reservationDetailList, 12312312, 1213123)
-    booking.flightBookings.forEach(element => {
-        //console.log(element)
-    });
     const content: object = {message: "Booking has been created", booking};
+    res.render('partials/booking/createBooking', content);
+});
+
+router.post('/reserve', async (req, res) => {
+
+    let departureAirport : IAirportIdentifier = {iata: req.body.departureAirport}
+    let arrivalAirport : IAirportIdentifier = {iata: req.body.arrivalAirport}
+    let departureDate : number  = req.body.departureDate;
+    const availableFlights = await mock.getFlightsAvailable(departureAirport, arrivalAirport, departureDate)
+    console.log(availableFlights);
+
+    const content: object = {message: "Reservation Success", reservation : "123-ABC"};
     res.render('partials/booking/createBooking', content);
 });
 
