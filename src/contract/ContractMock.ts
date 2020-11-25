@@ -21,14 +21,31 @@ const _BOOKINGLIST: IBookingDetail[] = [];
 const _FLIGHTLIST: IFlightSummary[] = [];
 
 export default class ContractMock implements IContract{
-    async getCarrierInformation(iata: string): Promise<ICarrierDetail> {       
-        const carrierDetail: ICarrierDetail ={
+        async getCarrierInformation(iata: string): Promise<ICarrierDetail> {       
+            try {
+        const carrierDetail0: ICarrierDetail ={
         iata: "SAS140",
         name: 'SAS'
        }
+
+       const carrierDetail1: ICarrierDetail ={
+        iata: "NW139",
+        name: 'Norwegian'
+       }
+       const carrierDetail2: ICarrierDetail ={
+        iata: "SS150",
+        name: 'Sunset'
+       }
+
+       const allcarrierDetail: ICarrierDetail[] = [carrierDetail0,carrierDetail1,carrierDetail2];
+       let carrierDetail = allcarrierDetail.find(carrier => carrier.iata.toLocaleLowerCase() === iata.toLocaleLowerCase())
+
        return new Promise((resolve, reject) => resolve(carrierDetail))
     }
-
+    catch(error){
+        return new Promise((resolve, reject) => reject());
+    }
+    }
 
     async getAirportInformation(iata: string): Promise<IAirportDetail> {
         try {
