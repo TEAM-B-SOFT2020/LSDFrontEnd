@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
     const content: object = { carrier };
     
     //Return the content to the carriers view
-	res.render('carriers', content);
+	res.render('carriers');
 });
 
 router.post('/get', async (req, res) => {

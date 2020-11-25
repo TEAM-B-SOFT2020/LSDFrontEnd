@@ -15,16 +15,7 @@
                     <input name="iata" type="string" placeholder="iata code" required />        
                    <input type="submit" />
                   </form>
-				<ul class="list-group">
-					<li class="list-group-item">
-						<% if(carrier){ %>
-                            <%= carrier.name %>
-                        <% } else { %>
-                            Found no carrier...
-                        <% } %>
-						
-					</li>
-				</ul>
+				 				
 			</div>
 		</main>
 		<%- include('partials/footer.ejs') %>
