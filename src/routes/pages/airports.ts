@@ -3,7 +3,6 @@ import * as express from 'express';
 import IContract from 'contract';
 import Contract from "../../contract/ContractMock";
 
-import IAirportDetail from 'contract/src/DTO/IAirportDetail';
 
 const contract: IContract = new Contract();
 
