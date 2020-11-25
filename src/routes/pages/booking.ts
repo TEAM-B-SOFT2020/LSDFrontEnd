@@ -55,11 +55,11 @@ router.post('/flight', async (req, res) => {
 
 
 router.post('/reserve', async (req, res) => {
-    let obj = JSON.parse(req.body.flight);
+    let selectedFlight = JSON.parse(req.body.flight);
     const flight : IFlightIdentifier = {
-        flightCode : obj.flightCode
+        flightCode : selectedFlight.flightCode
     }
-    const seatCost = obj.seatPrice;
+    const seatCost = selectedFlight.seatPrice;
     const reservation = await mock.reserveFlight(flight, seatCost);
     const content: object = {message: "Reservation Success", reservation};
     console.log("========= FLIGHT RESERVED ======")
@@ -70,8 +70,6 @@ router.post('/reserve', async (req, res) => {
 router.post('/create', async (req, res) => {
     // stephan syntax:: just a complex way to make a simple list    
     //Makes a mock of the ContractMock called mock
-    console.log("=======================")
-    console.log(req.body);
     let passengerList : IPassenger[] = req.body.passenger;
     let reservationDetailList : IReservationDetail[] = [];
     let reservationDetail : IReservationDetail = {
@@ -84,7 +82,7 @@ router.post('/create', async (req, res) => {
     console.log("===== BOOOKING CREATED ==========")
     console.log(booking)
     const content: object = {message: "Booking has been created", booking};
-    //res.render('partials/booking/bookingSuccess', content);
+    res.render('partials/booking/bookingSuccess', content);
 });
 
 

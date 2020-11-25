@@ -93,11 +93,23 @@ export default class ContractMock implements IContract{
 
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
         var yyyy = today.getFullYear();
         var todayFormatted = yyyy + '-' + mm + '-' + dd;
-        var todayUnix = new Date(todayFormatted).getTime() / 1000;
+        var todayUnix = Math.floor(new Date(todayFormatted).getTime()/1000.0);
         var departDateUnix = new Date(depart).getTime() / 1000
+
+
+        function randomDateInFuturetToUnix() {
+            var d = new Date();
+            d.setDate(d.getDate() + Math.floor(Math.random() * 6) + 1  );
+            var ddd = String(d.getDate()).padStart(2, '0');
+            var mmm = String(d.getMonth() + 1).padStart(2, '0');
+            var yyyyy = d.getFullYear();
+            var todayFormatted2 = yyyyy + '-' + mmm + '-' + ddd;
+            var todayUnix2 = Math.floor(new Date(todayFormatted2).getTime()/1000.0);
+            return todayUnix2;
+        }
 
 
 		const flight1: IFlightSummary = {
@@ -105,7 +117,7 @@ export default class ContractMock implements IContract{
 			arrivalAirport : arrivalAirport,
 			carrier,
 			departureDate: todayUnix,
-			arrivalDate: 1606388400,
+			arrivalDate: randomDateInFuturetToUnix(),
 			availableSeats: 100,
 			seatPrice: 1500,
 			flightCode: 'abc123',
@@ -117,7 +129,7 @@ export default class ContractMock implements IContract{
 			arrivalAirport : arrivalAirport,
 			carrier,
 			departureDate: todayUnix,
-			arrivalDate: 1606388400,
+			arrivalDate: randomDateInFuturetToUnix(),
 			availableSeats: 100,
 			seatPrice: 1500,
 			flightCode: 'acq-123',
@@ -128,7 +140,7 @@ export default class ContractMock implements IContract{
 			arrivalAirport : arrivalAirport2,
 			carrier,
 			departureDate: todayUnix,
-			arrivalDate: 11,
+			arrivalDate: randomDateInFuturetToUnix(),
 			availableSeats: 9,
 			seatPrice: 500,
 			flightCode: 'abc789',
@@ -140,7 +152,7 @@ export default class ContractMock implements IContract{
 			arrivalAirport : arrivalAirport3,
 			carrier,
 			departureDate: todayUnix,
-			arrivalDate: 11,
+			arrivalDate: randomDateInFuturetToUnix(),
 			availableSeats: 100,
 			seatPrice: 2500,
 			flightCode: 'bcd123',
@@ -151,7 +163,7 @@ export default class ContractMock implements IContract{
 			arrivalAirport : arrivalAirport2,
 			carrier,
 			departureDate: todayUnix,
-			arrivalDate: 11,
+			arrivalDate: randomDateInFuturetToUnix(),
 			availableSeats: 100,
 			seatPrice: 2500,
 			flightCode: 'bcd123',

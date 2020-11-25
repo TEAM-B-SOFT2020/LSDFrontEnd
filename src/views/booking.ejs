@@ -33,7 +33,7 @@
         </section>
 
         <section id="find-booking-container" class="mb-4">
-          <h5 class="text-center mb-4">Create Booking</h3>
+          <h5 class="text-center mb-4">Find Booking</h3>
           <form action="/booking/get" method="POST">
             <label for="header">Booking Id</label>
             <input name="bookingId" type="string" placeholder="booking id" required />        
@@ -63,9 +63,6 @@
       today = yyyy + '-' + mm + '-' + dd;
       document.getElementById("departureDateInput").setAttribute("min", today);
       document.getElementById("departureDateInput").setAttribute("value", today);
-      document.getElementById("arrivalDateInput").setAttribute("min", today);
-      document.getElementById("arrivalDateInput").setAttribute("value", today);
-      console.log(today)
     </script>
 	</body>		
 </html>

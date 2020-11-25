@@ -5,40 +5,83 @@
 		<title>LSD Frontend</title>
 		<link href="style.css" rel="stylesheet" type="text/css" />
 		<style>
-			.bloc {
-				display: inline-block;
-				vertical-align: top;
-				overflow: hidden;
-				}
-
-				.bloc select {
-				padding: 4px;
-				margin: -5px -20px -5px -5px;
+			#flight-container {
+				margin-bottom: 10px;
+				padding: 10px;
+				border: 1px solid rgba(0,0,0,0.1);
+				border-radius: 5px;
 			}
-</style>
-	<head>
+
+			#flight-container:hover {
+				transition: 0.2s ease;
+				background-color: rgba(0,0,0,0.1)
+			}
+		</style>
+	<head> 
 	<body class="d-flex flex-column h-100"> 
 		<%- include('../../partials/navbar.ejs', {active: "home"})  %>
 		<main role="main" class="flex-shrink-0">
 			<div class="container">
                 <h2>Found <%= availableFlights.length %> available flights</h2>
-				<form action="/booking/reserve" method="POST">
-					<div class="form-group" style="margin-bottom: 0px;">
-						<div class="bloc">
-							<select name="flight" size=<%= availableFlights.length %>>
-								<% availableFlights.forEach((data) => { %>
-									<option class="form-check-label" value='{"flightCode" : "<%= data.flightCode %>", "seatPrice" : "<%= data.seatPrice %>"}'>
-										<p><%= data.departureAirport.iata %></p>
-										<p><%= data.arrivalAirport.iata %></p>
-										<p><%= data.carrier.aita %> : <%= data.carrier.name %></p>
-										<p><%= data.departureDate %></p>
-									</option>
-		
-								<% }) %>
-							</select>	
-					  </div>
+				<form action="/booking/reserve" method="POST" class="mt-4">	
+					<% availableFlights.forEach((data) => { %>
+						<div id="flight-container" clas="form-group">
+							<div class="custom-control custom-radio w-100 mb-2">
+								<input type="radio" id='<%= data.flightCode %>' name="flight" class="custom-control-input" value='{"flightCode" : "<%= data.flightCode %>", "seatPrice" : "<%= data.seatPrice %>"}'>
+								<label class="custom-control-label w-100" for='<%= data.flightCode %>'>
+									<div class="row">
+										<div class="col-2">
+											<span class="text-uppercase  font-weight-bold"><%= data.carrier.name %></span>
+										</div>
+										<div class="col-4 text-center">
+											<% var departureDate = new Date(data.departureDate * 1000) %>
+											<% var arrivalDate = new Date(data.arrivalDate * 1000) %>
+											<div class="row">
+												<div class="col-12">
+													<span><%= departureDate.toLocaleDateString('en-US', {day: 'numeric', month: 'long'}) %></span> - <span class="col text-right"><%= arrivalDate.toLocaleDateString('en-US', {day: 'numeric', month: 'long'}) %></span>
+												</div>
+												<div class="col-12">
+													<span><%= departureDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %> - <%= arrivalDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})  %></span>
+												</div>
+											</div>
+										</div>
+										<% var date1 = new Date(1606262400 * 1000); %>
+										<% var date2 = new Date(1606435200 * 1000); %>
+										<% var diffMs = (date2 - date1); %>
+										<% 	var diffDays = Math.floor(diffMs / 86400000); %>
+										<% 	var diffHrs = Math.floor((diffMs % 86400000) / 3600000); %>
+										<% 	var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); %>
+										<div class="col-3">
+											<div class="row text-center">
+												<div class="col-12">
+													<% if(diffDays !== 0) { %>
+														<span><%= diffDays + "d " + diffHrs + "hr " + diffMins + "min" %></span>
+													<%} else { %>
+														<span><%= diffHrs + " hr " + diffMins + " min" %></span>
+													<%}%>
+												</div>
+												<div class="col-12">
+													<span><%= data.departureAirport.iata %></span> - <span><%= data.arrivalAirport.iata %></span>
+												</div>
+											</div>
+										</div>
+										<div class="col-3 text-right">
+											<div class="row">
+												<div class="col-12">
+													<span>SEAT PRICE <%= data.seatPrice %>,-</span>
+												</div>
+												<div class="col-12">
+													<span>SEATS: <%= data.availableSeats %>,-</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</label>
+							</div>
+						</div>
+					<% }) %>	
+					<button type="submit">Next</button>
 					</div>
-					  <button type="submit">Next</button>
 				</form>
 			</div>
 		</main>
