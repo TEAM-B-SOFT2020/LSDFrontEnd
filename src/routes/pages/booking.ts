@@ -66,6 +66,8 @@ router.post('/reserve', async (req, res) => {
     let arrivalAirport : IAirportIdentifier = {iata: req.body.arrivalAirport}
     let departureDate : number  = req.body.departureDate;
     const availableFlights = await mock.getFlightsAvailable(departureAirport, arrivalAirport, departureDate)
+    const reservation = await mock.reserveFlight(availableFlights[0], 500);
+    console.log(reservation);
     console.log(availableFlights);
 
     const content: object = {message: "Reservation Success", reservation : "123-ABC"};
