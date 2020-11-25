@@ -1,4 +1,5 @@
 # Case II, an Airline GDS Global Distribution
+![FRONTEND CI](https://github.com/TEAM-B-SOFT2020/LSDFrontEnd/workflows/Frontend%20CI/badge.svg)
 
 
 ## Glossary
