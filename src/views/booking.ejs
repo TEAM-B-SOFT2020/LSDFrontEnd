@@ -9,72 +9,63 @@
 		<%- include('partials/navbar.ejs', {active: "booking"})  %>
 		<main role="main" class="flex-shrink-0">
 			<div class="container">
-				<h2>Hello from booking!</h2>
-
-        <hr />        
-        <h4>Find booking by id</h4>
-        <form action="/booking/get" method="POST">
-          <label for="header">Booking Id</label>
-          <input name="bookingId" type="string" placeholder="booking id" required />        
-         <input type="submit" />
-        </form>
-
-        <hr />        
-        <h4>Cancel booking by id</h4>
-        <form action="/booking/cancel" method="POST">
-          <label for="header">Booking Id</label>
-          <input name="bookingId" type="string" placeholder="booking id" required />        
-         <input type="submit" />
-        </form>
-
-        <hr />        
-        <h4>Create Booking</h4>        
-        <form action="/booking/create" method="POST">
-          <div class="form-group">
-            <label for="emailInput">Email Address</label>
-            <input type="email" class="form-control" id="emailInput" required placeholder="Email">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-          </div>
-          <div id="passenger-container">
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="firstnameInput">First Name</label>
-                <input type="text" class="form-control" id="firstnameinput" placeholder="Firstname" required name="passenger[1][first_name]">
+        <section id="find-flight-container" class="mb-4">   
+          <form action="/booking/flight" method="POST">
+            <hr />
+              <h5 class="text-center mb-4">Destination</h3>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="departureAirportInput">Departure Airport</label>
+                  <input type="text" class="form-control" id="departureAirportInput" placeholder="Departure IATA" required name="departureAirport">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="arrivalAirportInput">Arrival Airport</label>
+                  <input type="text" class="form-control" id="arrivalAirportInput" placeholder="Arrival IATA" required name="arrivalAirport">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="departureDateInput">Departure Date</label>
+                  <input type="date" class="form-control" id="departureDateInput" placeholder="Departure" required name="departureDate">
+                </div>
               </div>
-              <div class="form-group col-md-6">
-                <label for="lastnameInput">Last Name</label>
-                <input type="text" class="form-control" id="lastnameinput" placeholder="Lastname" required autocomplete="false" name="passenger[1][last_name]">
-              </div>
-            </div>
-          </div>
-          <a onclick="addPassengerToForm()"class="btn btn-link float-right" >[+] Add an extra passenger</a>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+              <button type="submit" class="btn btn-primary">Next</button>
+          </form>
+          <hr />
+        </section>
+
+        <section id="find-booking-container" class="mb-4">
+          <h5 class="text-center mb-4">Create Booking</h3>
+          <form action="/booking/get" method="POST">
+            <label for="header">Booking Id</label>
+            <input name="bookingId" type="string" placeholder="booking id" required />        
+           <input type="submit" />
+          </form>
+          <hr />
+        </section>
+
+        <section id="cancel-booking-container" class="mb-4">
+          <h5 class="text-center mb-4">Cancel Booking</h3>
+          <form action="/booking/cancel" method="POST">
+            <label for="header">Booking Id</label>
+            <input name="bookingId" type="string" placeholder="booking id" required />        
+           <input type="submit" />
+          </form>
+          <hr />
+        </section>      
 			</div>
 		</main>
 		<%- include('partials/footer.ejs') %>
     <%- include('imports/bootstrap-scripts.ejs') %>
     <script>
-      let i = 2;
-      function addPassengerToForm() {
-          let template = `
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="firstnameInput">First Name</label>
-                  <input type="text" class="form-control" id="firstnameinput" placeholder="Firstname" required name="passenger[${i}][first_name]">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="lastnameInput">Last Name</label>
-                  <input type="text" class="form-control" id="lastnameinput" placeholder="Lastname" required autocomplete="false" name="passenger[${i}][last_name]">
-                </div>
-              </div>
-          `;
-          let container = document.getElementById('passenger-container');
-          let div = document.createElement('div');
-          div.innerHTML = template;
-          container.appendChild(div);
-          i++;
-      }
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+      today = yyyy + '-' + mm + '-' + dd;
+      document.getElementById("departureDateInput").setAttribute("min", today);
+      document.getElementById("departureDateInput").setAttribute("value", today);
+      document.getElementById("arrivalDateInput").setAttribute("min", today);
+      document.getElementById("arrivalDateInput").setAttribute("value", today);
+      console.log(today)
     </script>
 	</body>		
 </html>

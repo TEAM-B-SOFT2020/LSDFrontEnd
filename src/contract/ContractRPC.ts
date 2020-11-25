@@ -22,46 +22,89 @@ const rpc = createClient<IContract>({ endpoint, serializer, xhr });
 
 
 export default class ContractRPC implements IContract {
- async getCarrierInformation(iata: string): Promise<ICarrierDetail> {
-    const response: any = await rpc.getCarrierInformation(iata).call();
-    	// ATT:: handle all errors...
-		// if (response?.success) throw new NotFoundError('Carrier not found');
 
-		// duck typing -> le Quack 🦆
-		const carrierDetail: ICarrierDetail = response?.data;
-		return carrierDetail;
+    async getCarrierInformation(iata: string): Promise<ICarrierDetail> {
+        try {
+            const response: any = await rpc.getCarrierInformation(iata).call();
+            // ATT:: handle all errors...
+	        // if (response?.success) throw new NotFoundError('Carrier not found');
 
+		    // duck typing -> le Quack 🦆
+            const carrierDetail: ICarrierDetail = response?.data;
+        
+            return new Promise((resolve, reject) => resolve(carrierDetail))
+        }
+        catch(error){
+            return new Promise((resolve, reject) => reject());
+        }
     }
+
     async getAirportInformation(iata: string): Promise<IAirportDetail> {
-       const response: any = await rpc.getAirportInformation(iata).call();
-       
-       const airportDetail: IAirportDetail = response?.data;
-       return airportDetail;       
+       try {
+           const response: any = await rpc.getAirportInformation(iata).call();
+           const airportDetail: IAirportDetail = response?.data;
+           return new Promise((resolve, reject) => resolve(airportDetail));    
+       }
+       catch(error){
+           return new Promise((resolve, reject) => reject());
+       }
     }
-    async getFlightsAvailable(departure: IAirportIdentifier, arrival: IAirportIdentifier, depart: number): Promise<IFlightSummary[]> {
-        const response: any = await rpc.getFlightsAvailable(departure, arrival, depart).call();
-       
-       const flightSummeries: IFlightSummary[] = response?.data;
-       return flightSummeries;    
-    }
-    async reserveFlight(id: IFlightIdentifier, amountSeats: number): Promise<IReservationSummary> {
-        const response: any = await rpc.reserveFlight(id, amountSeats).call();
 
+    async getFlightsAvailable(departure: IAirportIdentifier, arrival: IAirportIdentifier, depart: number): Promise<IFlightSummary[]> {
+        try {
+            const response: any = await rpc.getFlightsAvailable(departure, arrival, depart).call();
+            const flightSummeries: IFlightSummary[] = response?.data;
+            return new Promise((resolve, reject) => resolve(flightSummeries));   
+        }
+        catch(error){
+            return new Promise((resolve, reject) => reject());
+        }
+    }
+
+    async reserveFlight(id: IFlightIdentifier, amountSeats: number): Promise<IReservationSummary> {
+        try {
+            const response: any = await rpc.reserveFlight(id, amountSeats).call();
+            const reservationSummary: IReservationSummary = response?.data;
+            return new Promise((resolve, reject) => resolve(reservationSummary));
 		// ATT:: handle all errors...
 		// if (response?.success) throw new NotFoundError('Carrier not found');
-
 		// duck typing -> le Quack 🦆
-		const reservationSummary: IReservationSummary = response?.data;
-		return reservationSummary;
+        }
+        catch(error){
+            return new Promise((resolve, reject) => reject());
+        }
     }
+
     async createBooking(reservationDetails: IReservationDetail[], creditCardNumber: number, frequentFlyerNumber?: number): Promise<IBookingDetail> {
-        throw new Error('Method not implemented.');
+        try{
+            const response: any = await rpc.createBooking(reservationDetails,creditCardNumber,frequentFlyerNumber);
+            const bookingDetail: IBookingDetail = response?.data;
+            return new Promise((resolve, reject) => resolve(bookingDetail));
+        }
+        catch(error){
+            return new Promise((resolve, reject) => reject());
+        }
     }
+
     async getBooking(id: IBookingIdentifier): Promise<IBookingDetail> {
-        throw new Error('Method not implemented.');
+        try{
+            const response: any = await rpc.getBooking(id);
+            const bookingDetail: IBookingDetail = response?.data;
+            return new Promise((resolve, reject) => resolve(bookingDetail));
+        }
+        catch(error){
+            return new Promise((resolve, reject) => reject());
+        }
     }
+
     async cancelBooking(id: IBookingIdentifier): Promise<void> {
-        throw new Error('Method not implemented.');
+        try{
+            const response: any = await rpc.cancelBooking(id);
+            return new Promise((resolve, reject) => resolve());
+        }
+        catch(error){
+            return new Promise((resolve, reject) => reject());
+        }
     }
 
 }
