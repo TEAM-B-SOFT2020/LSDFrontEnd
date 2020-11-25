@@ -1,3 +1,4 @@
+import { Console } from 'console';
 import IContract from 'contract';
 import IAirportDetail from 'contract/src/DTO/IAirportDetail';
 import IBookingDetail from 'contract/src/DTO/IBookingDetail';
@@ -11,9 +12,6 @@ import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
 import IPassenger from 'contract/src/IPassenger';
-import { lstat } from 'fs';
-import { PassThrough } from 'stream';
-import { ResolvedTypeReferenceDirective } from 'typescript';
 import { uuid } from 'uuidv4';
 
 
@@ -138,6 +136,7 @@ export default class ContractMock implements IContract{
         reservationDetails.map(x => {
             passList = Object.assign(passList, x.passengers)
         })
+        
 
        flightPassengers = Object.assign(flightPassengers, passList);
        flightPassengers.forEach(x => {
@@ -152,15 +151,14 @@ export default class ContractMock implements IContract{
        const flightBooking1 : IFlightBookingDetail = {passengers : flightPassengers,carrier,departureDate: 5,arrivalDate: 10,arrivalAirport : arrivalAirport,departureAirport : departureAirport,flightCode: 'bdc123'};
        
        flightBookings.push(flightBooking1);
-
+        
         const bookingDetail: IBookingDetail = {
             flightBookings,
             id: uuid(),
             frequentFlyerId : "123AX4",
             creditCardNumber : 22334455,
             price: 5000,
-        };
-
+        };     
         _BOOKINGLIST.push(bookingDetail);
         return new Promise((resolve, reject) => resolve(bookingDetail));      
     }
