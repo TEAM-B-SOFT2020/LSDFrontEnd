@@ -2,18 +2,17 @@
 
 import IContract from "contract";
 import Contract from "../contract/ContractMock";
-import ICarrierDetail from 'contract/src/DTO/ICarrierDetail';
-
+import IAirportDetail from "contract/src/DTO/IAirportDetail";
 
 const contract: IContract = new Contract();
+
 
 // creates a block that groups together several related tests
 describe('Example Test for Github Actions', () => {
 	// runs the test
 	test('True should be truthy', async () => {
-		let result = await (await contract.getCarrierInformation('SAS140'));
-		const expected: ICarrierDetail= {iata: 'SAS140', name: 'SAS'};		
+		let result = await (await contract.getAirportInformation('lol'));
+		const expected: IAirportDetail = {iata: 'lol', name: 'lolland', timeZone:'GMT+1'} ;	
 		expect(expected).toEqual(result);
 	});
 });
-
