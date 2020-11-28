@@ -47,11 +47,8 @@ router.post('/flight', async (req, res) => {
     const arrivalAirport : IAirportIdentifier = {iata: req.body.arrivalAirport}
     const departureDate : number  = req.body.departureDate;
     const availableFlights = await mock.getFlightsAvailable(departureAirport, arrivalAirport, departureDate);
-    console.log("====== FLIGHTS AVAILABLE ====")
-    console.log(availableFlights);
     const content: object = {availableFlights};
     res.render('partials/booking/chooseFlight', content);
-    logger.info("Loaded Booking.ts")
 });
 
 
@@ -63,8 +60,6 @@ router.post('/reserve', async (req, res) => {
     const seatCost = selectedFlight.seatPrice;
     const reservation = await mock.reserveFlight(flight, seatCost);
     const content: object = {message: "Reservation Success", reservation};
-    console.log("========= FLIGHT RESERVED ======")
-    console.log(reservation);
     res.render('partials/booking/createBooking', content);
     
 });
@@ -79,11 +74,9 @@ router.post('/create', async (req, res) => {
         passengers: passengerList
     }; 
     reservationDetailList.push(reservationDetail)
-
     const booking = await mock.createBooking(reservationDetailList, 12312312, 1213123);
-    console.log("===== BOOOKING CREATED ==========")
-    console.log(booking)
     const content: object = {message: "Booking has been created", booking};
+    logger.info(booking);
     res.render('partials/booking/bookingSuccess', content);
 });
 

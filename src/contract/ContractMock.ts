@@ -186,11 +186,6 @@ export default class ContractMock implements IContract{
     }
 
     async createBooking(reservationDetails: IReservationDetail[], creditCardNumber: number, frequentFlyerNumber?: number): Promise<IBookingDetail> {  
-        console.log("[CREATE BOOKING] : Info is being sent correctly, now we just have to handle it!")
-        console.log("[CREATE BOOKING] : Creadit Card Number: " + creditCardNumber + "\tFrequent Flyer Number: " + frequentFlyerNumber)
-        console.log("[CREATE BOOKING] : Reservation Details:");
-
-
         var flightBookings : IFlightBookingDetail[] = []        
         var flightPassengers : IFlightPassenger[] = [];
 
