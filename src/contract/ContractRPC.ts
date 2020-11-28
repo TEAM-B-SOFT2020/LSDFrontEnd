@@ -14,6 +14,8 @@ import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
 
+import logger from '../logger';
+
 
 
 // RPC Configuration
@@ -35,6 +37,7 @@ export default class ContractRPC implements IContract {
             return new Promise((resolve, reject) => resolve(carrierDetail))
         }
         catch(error){
+            logger.error(error);
             return new Promise((resolve, reject) => reject());
         }
     }
@@ -46,6 +49,7 @@ export default class ContractRPC implements IContract {
            return new Promise((resolve, reject) => resolve(airportDetail));    
        }
        catch(error){
+            logger.error(error);
            return new Promise((resolve, reject) => reject());
        }
     }
@@ -57,6 +61,7 @@ export default class ContractRPC implements IContract {
             return new Promise((resolve, reject) => resolve(flightSummeries));   
         }
         catch(error){
+            logger.error(error);
             return new Promise((resolve, reject) => reject());
         }
     }
@@ -71,6 +76,7 @@ export default class ContractRPC implements IContract {
 		// duck typing -> le Quack 🦆
         }
         catch(error){
+            logger.error(error);
             return new Promise((resolve, reject) => reject());
         }
     }
@@ -82,6 +88,7 @@ export default class ContractRPC implements IContract {
             return new Promise((resolve, reject) => resolve(bookingDetail));
         }
         catch(error){
+            logger.error(error);
             return new Promise((resolve, reject) => reject());
         }
     }
@@ -93,6 +100,7 @@ export default class ContractRPC implements IContract {
             return new Promise((resolve, reject) => resolve(bookingDetail));
         }
         catch(error){
+            logger.error(error);
             return new Promise((resolve, reject) => reject());
         }
     }
@@ -103,6 +111,7 @@ export default class ContractRPC implements IContract {
             return new Promise((resolve, reject) => resolve());
         }
         catch(error){
+            logger.error(error);
             return new Promise((resolve, reject) => reject());
         }
     }
