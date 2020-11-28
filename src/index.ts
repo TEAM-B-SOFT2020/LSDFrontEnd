@@ -3,6 +3,7 @@ import express from 'express/';
 import path from 'path';
 import dotenv from 'dotenv';
 
+
 dotenv.config();
 
 // routes
@@ -14,13 +15,30 @@ import flightapi from './routes/api/flightapi';
 import api from './routes/api/api';
 import airports from './routes/pages/airports';
 
+import expressWinston from 'express-winston';
+import winston from 'winston';
+
+
+
 // environments variables -> .env
 const port: any = process.env.PORT;
 const app: express.Application = express();
 
+
+//Winston Logging setup
+/*
+app.use(expressWinston.logger({
+    transports: [
+        new winston.transports.Console()
+    ],
+}));
+*/
+
+
 // ejs configuration
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
 // route configuration (if you want a new page with some new data)
 app.use('/', views);
 app.use('/flights', flights);

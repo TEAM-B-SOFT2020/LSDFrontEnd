@@ -12,10 +12,12 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "express-winston": "^4.0.5",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5",
-    "uuidv4": "^6.2.5"
+    "uuidv4": "^6.2.5",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
@@ -33,7 +35,11 @@
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": ["ts", "tsx", "js"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   },
   "scripts": {
     "start": "NODE_ENV=production yarn ts-node src/index.ts",

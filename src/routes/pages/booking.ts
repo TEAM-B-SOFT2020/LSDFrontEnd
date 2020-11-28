@@ -12,7 +12,7 @@ import IFlightPassenger from 'contract/src/DTO/IFlightPassenger';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
 
-
+import logger from '../../logger';
 
 // classes, interfaces & functions
 const router: express.Router = express.Router();
@@ -51,6 +51,7 @@ router.post('/flight', async (req, res) => {
     console.log(availableFlights);
     const content: object = {availableFlights};
     res.render('partials/booking/chooseFlight', content);
+    logger.info("Loaded Booking.ts")
 });
 
 
@@ -65,6 +66,7 @@ router.post('/reserve', async (req, res) => {
     console.log("========= FLIGHT RESERVED ======")
     console.log(reservation);
     res.render('partials/booking/createBooking', content);
+    
 });
 
 router.post('/create', async (req, res) => {
@@ -94,6 +96,5 @@ router.post('/cancel', async (req, res) => {
     const content: object = {message: "Booking [" + bookingId.id + "] has been cancelled"};
     res.render('partials/booking/cancelBooking', content);
 });
-
 
 export default router;
