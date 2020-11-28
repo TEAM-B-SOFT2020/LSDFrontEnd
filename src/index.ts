@@ -23,6 +23,7 @@ import winston from 'winston';
 const port: any = process.env.PORT;
 const app: express.Application = express();
 
+app.use(require('express-status-monitor')());
 
 // ejs configuration
 app.set('views', path.join(__dirname, 'views'));
