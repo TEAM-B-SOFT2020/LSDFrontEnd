@@ -27,7 +27,7 @@
 					<% availableFlights.forEach((data) => { %>
 						<div id="flight-container" clas="form-group">
 							<div class="custom-control custom-radio w-100 mb-2">
-								<input type="radio" id='<%= data.flightCode %>' name="flight" class="custom-control-input" value='{"flightCode" : "<%= data.flightCode %>", "seatPrice" : "<%= data.seatPrice %>"}'>
+								<input type="radio" required id='<%= data.flightCode %>' name="flight" class="custom-control-input" value='{"flightCode" : "<%= data.flightCode %>", "seatPrice" : "<%= data.seatPrice %>"}'>
 								<label class="custom-control-label w-100" for='<%= data.flightCode %>'>
 									<div class="row">
 										<div class="col-2">

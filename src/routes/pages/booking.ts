@@ -12,8 +12,6 @@ import IFlightPassenger from 'contract/src/DTO/IFlightPassenger';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
 
-import logger from '../../logger';
-
 // classes, interfaces & functions
 const router: express.Router = express.Router();
 const mock = new ContractMock();
@@ -33,10 +31,12 @@ router.get('/', async (req, res) => {
 	res.render('booking');
 });
 
-router.post('/get', async (req, res) => {
+
+router.get('/get/:bookingId', async (req, res) => {
+    
     // stephan syntax:: just a complex way to make a simple list    
     //Makes a mock of the ContractMock called mock
-    let bookingId: IBookingIdentifier = { id: req.body.bookingId };
+    let bookingId: IBookingIdentifier = { id: req.params.bookingId };
     const booking = await mock.getBooking(bookingId);
     const content: object = {booking};
     res.render('partials/booking/getBooking', content);
@@ -75,9 +75,7 @@ router.post('/create', async (req, res) => {
     }; 
     reservationDetailList.push(reservationDetail)
     const booking = await mock.createBooking(reservationDetailList, 12312312, 1213123);
-    const content: object = {message: "Booking has been created", booking};
-    logger.info(booking);
-    res.render('partials/booking/bookingSuccess', content);
+    res.redirect("/booking/get/" + booking.id);
 });
 
 
@@ -88,6 +86,11 @@ router.post('/cancel', async (req, res) => {
     await mock.cancelBooking(bookingId);
     const content: object = {message: "Booking [" + bookingId.id + "] has been cancelled"};
     res.render('partials/booking/cancelBooking', content);
+});
+
+router.post('/find', async (req, res) => {
+    const bookingId = req.body.bookingId;
+    res.redirect('/booking/get/' + bookingId);
 });
 
 export default router;

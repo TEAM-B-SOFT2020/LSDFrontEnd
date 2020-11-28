@@ -33,11 +33,11 @@ export default class ContractRPC implements IContract {
 
 		    // duck typing -> le Quack 🦆
             const carrierDetail: ICarrierDetail = response?.data;
-        
+            logger.info("Got Carrier Information", carrierDetail);
             return new Promise((resolve, reject) => resolve(carrierDetail))
         }
         catch(error){
-            logger.error(error);
+            logger.error("Get Carrier Information", error);
             return new Promise((resolve, reject) => reject());
         }
     }
@@ -46,10 +46,11 @@ export default class ContractRPC implements IContract {
        try {
            const response: any = await rpc.getAirportInformation(iata).call();
            const airportDetail: IAirportDetail = response?.data;
+           logger.info("Got Airport Information", airportDetail);
            return new Promise((resolve, reject) => resolve(airportDetail));    
        }
        catch(error){
-            logger.error(error);
+            logger.error("Get Airport Information", error);
            return new Promise((resolve, reject) => reject());
        }
     }
@@ -58,10 +59,11 @@ export default class ContractRPC implements IContract {
         try {
             const response: any = await rpc.getFlightsAvailable(departure, arrival, depart).call();
             const flightSummeries: IFlightSummary[] = response?.data;
-            return new Promise((resolve, reject) => resolve(flightSummeries));   
+            logger.info("Got available flights", flightSummeries);
+            return new Promise((resolve, reject) => resolve(flightSummeries));
         }
         catch(error){
-            logger.error(error);
+            logger.error("Get Flights Availabie", error);
             return new Promise((resolve, reject) => reject());
         }
     }
@@ -70,13 +72,14 @@ export default class ContractRPC implements IContract {
         try {
             const response: any = await rpc.reserveFlight(id, amountSeats).call();
             const reservationSummary: IReservationSummary = response?.data;
+            logger.info("Reserved Flight", reservationSummary)
             return new Promise((resolve, reject) => resolve(reservationSummary));
 		// ATT:: handle all errors...
 		// if (response?.success) throw new NotFoundError('Carrier not found');
 		// duck typing -> le Quack 🦆
         }
         catch(error){
-            logger.error(error);
+            logger.error("Reserve Flight", error);
             return new Promise((resolve, reject) => reject());
         }
     }
@@ -85,10 +88,11 @@ export default class ContractRPC implements IContract {
         try{
             const response: any = await rpc.createBooking(reservationDetails,creditCardNumber,frequentFlyerNumber);
             const bookingDetail: IBookingDetail = response?.data;
+            logger.info("Created Booking", bookingDetail);
             return new Promise((resolve, reject) => resolve(bookingDetail));
         }
         catch(error){
-            logger.error(error);
+            logger.error("Create Booking", error);
             return new Promise((resolve, reject) => reject());
         }
     }
@@ -97,10 +101,11 @@ export default class ContractRPC implements IContract {
         try{
             const response: any = await rpc.getBooking(id);
             const bookingDetail: IBookingDetail = response?.data;
+            logger.info("Got Booking", bookingDetail)
             return new Promise((resolve, reject) => resolve(bookingDetail));
         }
         catch(error){
-            logger.error(error);
+            logger.error("Get Booking", error);
             return new Promise((resolve, reject) => reject());
         }
     }
@@ -108,10 +113,11 @@ export default class ContractRPC implements IContract {
     async cancelBooking(id: IBookingIdentifier): Promise<void> {
         try{
             const response: any = await rpc.cancelBooking(id);
+            logger.info("Cancelled Booking", response)
             return new Promise((resolve, reject) => resolve());
         }
         catch(error){
-            logger.error(error);
+            logger.error("Cancel Booking Error", error);
             return new Promise((resolve, reject) => reject());
         }
     }

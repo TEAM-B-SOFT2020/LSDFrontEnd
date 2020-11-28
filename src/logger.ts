@@ -1,8 +1,11 @@
 import { createLogger, format, transports } from 'winston';
+
 const { label, combine, timestamp , prettyPrint } = format;
-const logger = createLogger({
+var logger = createLogger({
   format: combine(
-        timestamp(),
+        timestamp({
+          format: 'YYYY-MM-DD HH:mm:ss'
+        }),
         prettyPrint(),
       ),
   transports: [
