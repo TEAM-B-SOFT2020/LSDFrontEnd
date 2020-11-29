@@ -15,6 +15,30 @@ register.setDefaultLabels({
 })
 // Enable the collection of default metrics
 client.collectDefaultMetrics({ register })
+// Create a histogram metric
+const httpRequestDurationMicroseconds = new client.Histogram({
+  name: 'http_request_duration_seconds',
+  help: 'Duration of HTTP requests in microseconds',
+  labelNames: ['method', 'route', 'code'],
+  buckets: [0.1, 0.3, 0.5, 0.7, 1, 3, 5, 7, 10]
+})
+// Register the histogram
+register.registerMetric(httpRequestDurationMicroseconds)
+// Define the HTTP server
+const server = http.createServer(async (req: any, res: any) => {
+    // Start the timer
+  const end = httpRequestDurationMicroseconds.startTimer()
+  // Retrieve route from request object
+  const route = url.parse(req.url).pathname
+  if (route === '/metrics') {
+    // Return all metrics the Prometheus exposition format
+    res.setHeader('Content-Type', register.contentType)
+    res.end(register.metrics())
+  }
+  // End timer and add labels
+  end({ route, code: res.statusCode, method: req.method })
+})
+
 
 dotenv.config();
 
@@ -32,15 +56,7 @@ import airports from './routes/pages/airports';
 const port: any = process.env.PORT;
 const app: express.Application = express();
 
-const server = http.createServer(async (req: any, res: any) => {
-	// Retrieve route from request object
-	const route = url.parse(req.url).pathname
-	if (route === '/metrics') {
-	  // Return all metrics the Prometheus exposition format
-	  res.setHeader('Content-Type', register.contentType)
-	  res.end(register.metrics())
-	}
-  })
+
 
 // ejs configuration
 app.set('views', path.join(__dirname, 'views'));
@@ -66,4 +82,4 @@ app.listen(port, () => {
 	console.table({ 'EJS Views': `http://localhost:${port}`, 'REST API': `http://localhost:${port}/api/` });
 });
 
-server.listen(8080)
+server.listen(4000)
