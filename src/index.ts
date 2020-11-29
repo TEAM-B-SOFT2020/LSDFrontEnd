@@ -4,7 +4,13 @@ import path from 'path';
 import dotenv from 'dotenv';
 
 const promBundle = require("express-prom-bundle");
-const metricsMiddleware = promBundle({includeMethod: true});
+const metricsMiddleware = promBundle({
+    autoregister: true,
+    includeStatusCode: true,
+    includePath: true,
+	includeMethod: true,
+	includeBody: true,
+});
 
 dotenv.config();
 
