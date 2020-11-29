@@ -23,7 +23,6 @@ const app: express.Application = express();
 
 app.use(promMid({
   metricsPath: '/metrics',
-  collectDefaultMetrics: true,
   // How often prometheus should collect the metrics
   interval: 60 * 1000,  
   // Any routes that should be ignored

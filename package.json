@@ -48,6 +48,7 @@
     "start": "NODE_ENV=production yarn ts-node src/index.ts",
     "dev": "yarn ts-node src/index.ts",
     "test": "jest",
-    "git": "git add -A && git commit -m \"Quick Fix Commit\" && git push"
+    "git": "git add -A && git commit -m \"Quick Fix Commit\" && git push",
+    "monitor" : "docker-compose"
   }
 }
