@@ -3,27 +3,18 @@ import express from 'express/';
 import path from 'path';
 import dotenv from 'dotenv';
 
-const promBundle = require("express-prom-bundle");
-const metricsMiddleware = promBundle({
-    autoregister: true,
-    includeStatusCode: true,
-    includePath: true,
-	includeMethod: true,
-	includeBody: true,
-	metricsPath: '/metrics',
-	requestDurationHistogramBuckets: true,
-	// How often prometheus should collect the metrics
-	interval: 60 * 1000,  
-	// Any routes that should be ignored
-	excludeRoutes: [],  
-	// Percentiles for request duration summary
-	requestDurationBuckets: [0.5, 0.9, 0.95, 0.99],  
-	// Time buckets for request duration histogram
-	// Size buckets for request
-	requestSizeBuckets: [5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000],  
-	// Size buckets for response
-	responseSizeBuckets: [5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000],
-});
+
+const http = require('http')
+const url = require('url')
+const client = require('prom-client')
+// Create a Registry which registers the metrics
+const register = new client.Registry()
+// Add a default label which is added to all metrics
+register.setDefaultLabels({
+  app: 'example-nodejs-app'
+})
+// Enable the collection of default metrics
+client.collectDefaultMetrics({ register })
 
 dotenv.config();
 
@@ -41,7 +32,15 @@ import airports from './routes/pages/airports';
 const port: any = process.env.PORT;
 const app: express.Application = express();
 
-app.use(metricsMiddleware);
+const server = http.createServer(async (req: any, res: any) => {
+	// Retrieve route from request object
+	const route = url.parse(req.url).pathname
+	if (route === '/metrics') {
+	  // Return all metrics the Prometheus exposition format
+	  res.setHeader('Content-Type', register.contentType)
+	  res.end(register.metrics())
+	}
+  })
 
 // ejs configuration
 app.set('views', path.join(__dirname, 'views'));
@@ -66,3 +65,5 @@ app.listen(port, () => {
 	console.log('Server running...');
 	console.table({ 'EJS Views': `http://localhost:${port}`, 'REST API': `http://localhost:${port}/api/` });
 });
+
+server.listen(8080)
