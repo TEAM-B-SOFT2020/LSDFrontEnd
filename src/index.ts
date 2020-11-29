@@ -3,6 +3,8 @@ import express from 'express/';
 import path from 'path';
 import dotenv from 'dotenv';
 
+const promBundle = require("express-prom-bundle");
+const metricsMiddleware = promBundle({includeMethod: true});
 
 dotenv.config();
 
@@ -16,14 +18,11 @@ import logapi from './routes/api/logapi';
 import api from './routes/api/api';
 import airports from './routes/pages/airports';
 
-import expressWinston from 'express-winston';
-import winston from 'winston';
-
 // environments variables -> .env
 const port: any = process.env.PORT;
 const app: express.Application = express();
 
-app.use(require('express-status-monitor')());
+app.use(metricsMiddleware);
 
 // ejs configuration
 app.set('views', path.join(__dirname, 'views'));
