@@ -49,6 +49,6 @@
     "dev": "yarn ts-node src/index.ts",
     "test": "jest",
     "git": "git add -A && git commit -m \"Quick Fix Commit\" && git push",
-    "monitor" : "docker-compose"
+    "monitor" : "docker-compose up"
   }
 }
