@@ -25,6 +25,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: yarn
+    - run: npm install
     - run: yarn add TEAM-B-SOFT2020/LSDContract
-    - run: yarn test
+    - run: npm test
