@@ -24,6 +24,6 @@ scrape_configs:
     scrape_interval: 5s
 
     static_configs:
-      - targets: ['172.18.21.177:4000'] #<--- do 'ipconfig /all' and write in the ipv4 ip here
+      - targets: ['prometheus:4000'] #<--- do 'ipconfig /all' and write in the ipv4 ip here
         labels:
           group: 'production'

@@ -13,6 +13,7 @@ import IReservationSummary from 'contract/src/DTO/IReservationSummary';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
+import IPassengerIdentifier from 'contract/src/IPassengerIdentifier';
 
 import logger from '../logger';
 
@@ -84,9 +85,9 @@ export default class ContractRPC implements IContract {
         }
     }
 
-    async createBooking(reservationDetails: IReservationDetail[], creditCardNumber: number, frequentFlyerNumber?: number): Promise<IBookingDetail> {
+    async createBooking(reservationDetails: IReservationDetail[], creditCardNumber: number): Promise<IBookingDetail> {
         try{
-            const response: any = await rpc.createBooking(reservationDetails,creditCardNumber,frequentFlyerNumber);
+            const response: any = await rpc.createBooking(reservationDetails,creditCardNumber);
             const bookingDetail: IBookingDetail = response?.data;
             logger.info("Created Booking", bookingDetail);
             return new Promise((resolve, reject) => resolve(bookingDetail));
@@ -97,9 +98,9 @@ export default class ContractRPC implements IContract {
         }
     }
 
-    async getBooking(id: IBookingIdentifier): Promise<IBookingDetail> {
+    async getBooking(passenger: IPassengerIdentifier): Promise<IBookingDetail> {
         try{
-            const response: any = await rpc.getBooking(id);
+            const response: any = await rpc.getBooking(passenger);
             const bookingDetail: IBookingDetail = response?.data;
             logger.info("Got Booking", bookingDetail)
             return new Promise((resolve, reject) => resolve(bookingDetail));
@@ -110,9 +111,22 @@ export default class ContractRPC implements IContract {
         }
     }
 
-    async cancelBooking(id: IBookingIdentifier): Promise<void> {
+    async getBookingOnBookingId(id: IBookingIdentifier): Promise<IBookingDetail>{
         try{
-            const response: any = await rpc.cancelBooking(id);
+            const response: any = await rpc.getBookingOnBookingId(id);
+            const bookingDetail: IBookingDetail = response?.data;
+            logger.info("Got Booking", bookingDetail)
+            return new Promise((resolve, reject) => resolve(bookingDetail));
+        }
+        catch(error){
+            logger.error("Get Booking", error);
+            return new Promise((resolve, reject) => reject());
+        }
+    }
+
+    async cancelBooking(passenger: IPassengerIdentifier): Promise<void> {
+        try{
+            const response: any = await rpc.cancelBooking(passenger);
             logger.info("Cancelled Booking", response)
             return new Promise((resolve, reject) => resolve());
         }

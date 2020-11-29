@@ -11,6 +11,7 @@ import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
 import IPassenger from 'contract/src/IPassenger';
+import IPassengerIdentifier from 'contract/src/IPassengerIdentifier';
 import { uuid } from 'uuidv4';
 import logger from '../logger';
 
@@ -20,7 +21,7 @@ var _FLIGHTLIST: IFlightSummary[] = [];
 var _RESERVATIONS : IReservationSummary[] = [];
 var _CARRIERS : ICarrierDetail[] = [];
 var _AIRPORTS : IAirportDetail[] = [];
-
+var _PASSENGERS : IPassengerIdentifier[] = [];
 
 //CARRIERS
 const carrierDetail0: ICarrierDetail ={
@@ -37,6 +38,19 @@ const carrierDetail2: ICarrierDetail ={
     name: 'Sunset'
 }
 _CARRIERS.push(carrierDetail0,carrierDetail1,carrierDetail2);
+
+//Passangers
+const passenger0: IPassengerIdentifier= {
+    pnr: "SDRE36",
+}
+const passenger1: IPassengerIdentifier={
+    pnr: "GJT45J",
+}
+const passenger2: IPassengerIdentifier={
+    pnr: "G45H6J",
+}
+_PASSENGERS.push(passenger0,passenger1,passenger2);
+
 
 
 
@@ -144,3 +158,4 @@ export const BOOKINGLIST = _BOOKINGLIST;
 export const CARRIERS = _CARRIERS;
 export const RESERVATIONS = _RESERVATIONS;
 export const AIRPORTS = _AIRPORTS;
+export const PASSENGERS = _PASSENGERS;

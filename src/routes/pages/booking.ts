@@ -11,6 +11,7 @@ import IPassenger from 'contract/src/IPassenger';
 import IFlightPassenger from 'contract/src/DTO/IFlightPassenger';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
+import IPassengerIdentifier from 'contract/src/IPassengerIdentifier';
 
 // classes, interfaces & functions
 const router: express.Router = express.Router();
@@ -37,7 +38,7 @@ router.get('/get/:bookingId', async (req, res) => {
     // stephan syntax:: just a complex way to make a simple list    
     //Makes a mock of the ContractMock called mock
     let bookingId: IBookingIdentifier = { id: req.params.bookingId };
-    const booking = await mock.getBooking(bookingId);
+    const booking = await mock.getBookingOnBookingId(bookingId);
     const content: object = {booking};
     res.render('partials/booking/getBooking', content);
 });
@@ -74,7 +75,7 @@ router.post('/create', async (req, res) => {
         passengers: passengerList
     }; 
     reservationDetailList.push(reservationDetail)
-    const booking = await mock.createBooking(reservationDetailList, 12312312, 1213123);
+    const booking = await mock.createBooking(reservationDetailList, 12312312);
     res.redirect("/booking/get/" + booking.id);
 });
 
@@ -82,9 +83,9 @@ router.post('/create', async (req, res) => {
 router.post('/cancel', async (req, res) => {
     // stephan syntax:: just a complex way to make a simple list    
     //Makes a mock of the ContractMock called mock
-    let bookingId: IBookingIdentifier = { id: req.body.bookingId };
+    let bookingId: IPassengerIdentifier = { pnr: req.body.bookingId };
     await mock.cancelBooking(bookingId);
-    const content: object = {message: "Booking [" + bookingId.id + "] has been cancelled"};
+    const content: object = {message: "Booking [" + bookingId.pnr + "] has been cancelled"};
     res.render('partials/booking/cancelBooking', content);
 });
 
