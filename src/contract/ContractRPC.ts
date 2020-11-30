@@ -34,11 +34,11 @@ export default class ContractRPC implements IContract {
             // duck typing -> le Quack 🦆
             if(response?.type === 'success'){
                 let carrierDetail= response?.data;
-                logger.info("Got Carrier Information:", carrierDetail);
+                logger.info("Got Carrier Information: " + carrierDetail);
                 return carrierDetail;
             }
             else if(response?.type === 'fail'){
-                logger.error("Get Carrier Information: " + response?.error + 
+                logger.error("Get Carrier Information error: " + response?.error + 
                 "--- User input was: " + iata);
                 throw new Error(response?.code + ': ' + response?.error);                
             }
@@ -48,95 +48,143 @@ export default class ContractRPC implements IContract {
     }
 
     async getAirportInformation(iata: string): Promise<IAirportDetail> {
-       try {
-           const response: any = await rpc.getAirportInformation(iata).call();
-           const airportDetail: IAirportDetail = response?.data;
-           logger.info("Got Airport Information", airportDetail);
-           return new Promise((resolve) => resolve(airportDetail));    
-       }
-       catch(error){
-            logger.error("Get Airport Information", error);
-           return new Promise((reject) => reject());
-       }
-    }
+   
+        const response: any = await rpc.getAirportInformation(iata).call();
+           if(response?.type === 'success'){   
+            const airportDetail: IAirportDetail = response?.data;
+            logger.info("Got Airport Information: " +  airportDetail);
+            return airportDetail;
+            }
+            else if(response?.type === 'fail')
+            {
+
+            logger.error("Get airport information error: " + response?.error + 
+            "--- User input was: " + iata);
+            throw new Error(response?.code + ': ' + response?.error);                
+        }
+        else{
+            throw new Error('Unknown error');
+        }
+    }    
 
     async getFlightsAvailable(departure: IAirportIdentifier, arrival: IAirportIdentifier, depart: number): Promise<IFlightSummary[]> {
-        try {
-            const response: any = await rpc.getFlightsAvailable(departure, arrival, depart).call();
+       
+        const response: any = await rpc.getFlightsAvailable(departure, arrival, depart).call();           
+
+        if(response?.type === 'success'){   
             const flightSummeries: IFlightSummary[] = response?.data;
-            logger.info("Got available flights", flightSummeries);
-            return new Promise((resolve, reject) => resolve(flightSummeries));
+            logger.info("Got available flights: " + flightSummeries);
+            return flightSummeries;    
+            }
+            else if(response?.type === 'fail')
+            {
+
+            logger.error("Get flights available error: " + response?.error + 
+            "--- User input was: " + departure + " -- " + arrival + " -- " + " -- " + depart);
+            throw new Error(response?.code + ': ' + response?.error);                
         }
-        catch(error){
-            logger.error("Get Flights Availabie", error);
-            return new Promise((resolve, reject) => reject());
+        else{
+            throw new Error('Unknown error');
         }
     }
 
     async reserveFlight(id: IFlightIdentifier, amountSeats: number): Promise<IReservationSummary> {
-        try {
-            const response: any = await rpc.reserveFlight(id, amountSeats).call();
+              
+        const response: any = await rpc.reserveFlight(id, amountSeats).call();
+        if(response?.type === 'success'){   
+         
             const reservationSummary: IReservationSummary = response?.data;
-            logger.info("Reserved Flight", reservationSummary)
-            return new Promise((resolve, reject) => resolve(reservationSummary));
-		// ATT:: handle all errors...
-		// if (response?.success) throw new NotFoundError('Carrier not found');
-		// duck typing -> le Quack 🦆
+            logger.info("Reserved Flight: " + reservationSummary)
+            return new Promise((resolve, reject) => resolve(reservationSummary)); 
+            }
+            else if(response?.type === 'fail')
+            {
+            logger.error("reserve flight error: " + response?.error + 
+            "--- User input was: " + id + " -- " + amountSeats );
+            throw new Error(response?.code + ': ' + response?.error);                
         }
-        catch(error){
-            logger.error("Reserve Flight", error);
-            return new Promise((resolve, reject) => reject());
+        else{
+            throw new Error('Unknown error');
         }
+    
     }
 
     async createBooking(reservationDetails: IReservationDetail[], creditCardNumber: number): Promise<IBookingDetail> {
-        try{
-            const response: any = await rpc.createBooking(reservationDetails,creditCardNumber).call();
+                
+        const response: any = await rpc.createBooking(reservationDetails,creditCardNumber).call();
+              
+        if(response?.type === 'success'){   
+         
             const bookingDetail: IBookingDetail = response?.data;
-            logger.info("Created Booking", bookingDetail);
-            return new Promise((resolve, reject) => resolve(bookingDetail));
+            logger.info("Created Booking: " + bookingDetail);
+            return bookingDetail;
+            }
+            else if(response?.type === 'fail')
+            {
+            logger.error("Create booking error: " + response?.error + 
+            "--- User input was: " + reservationDetails + " -- " + creditCardNumber);
+            throw new Error(response?.code + ': ' + response?.error);                
         }
-        catch(error){
-            logger.error("Create Booking", error);
-            return new Promise((resolve, reject) => reject());
+        else{
+            throw new Error('Unknown error');
         }
     }
 
     async getBooking(passenger: IPassengerIdentifier): Promise<IBookingDetail> {
-        try{
+       
             const response: any = await rpc.getBooking(passenger);
+        if(response?.type === 'success'){        
             const bookingDetail: IBookingDetail = response?.data;
-            logger.info("Got Booking", bookingDetail)
-            return new Promise((resolve, reject) => resolve(bookingDetail));
+            logger.info("Got Booking: " + bookingDetail)
+            return bookingDetail;
+            }
+            else if(response?.type === 'fail')
+            {
+            logger.error("Get booking information error: " + response?.error + 
+            "--- User input was: " + passenger);
+            throw new Error(response?.code + ': ' + response?.error);                
         }
-        catch(error){
-            logger.error("Get Booking", error);
-            return new Promise((resolve, reject) => reject());
+        else{
+            throw new Error('Unknown error');
         }
     }
 
     async getBookingOnBookingId(id: IBookingIdentifier): Promise<IBookingDetail>{
-        try{
+       
             const response: any = await rpc.getBookingOnBookingId(id);
+          
+      
+
+        if(response?.type === 'success'){        
             const bookingDetail: IBookingDetail = response?.data;
-            logger.info("Got Booking", bookingDetail)
-            return new Promise((resolve, reject) => resolve(bookingDetail));
+            logger.info("Got Booking: " + bookingDetail)
+            return bookingDetail;
+            }
+            else if(response?.type === 'fail')
+            {
+            logger.error("Get booking information error: " + response?.error + 
+            "--- User input was: " + id);
+            throw new Error(response?.code + ': ' + response?.error);                
         }
-        catch(error){
-            logger.error("Get Booking", error);
-            return new Promise((resolve, reject) => reject());
+        else{
+            throw new Error('Unknown error');
         }
     }
 
     async cancelBooking(passenger: IPassengerIdentifier): Promise<void> {
-        try{
-            const response: any = await rpc.cancelBooking(passenger);
-            logger.info("Cancelled Booking", response)
-            return new Promise((resolve, reject) => resolve());
+        const response: any = await rpc.cancelBooking(passenger);       
+    
+        if(response?.type === 'success'){      
+            logger.info("Cancelled booking: " + response)           
+            }
+            else if(response?.type === 'fail')
+            {
+            logger.error("Cancel Booking error: " + response?.error + 
+            "--- User input was: " + passenger);
+            throw new Error(response?.code + ': ' + response?.error);                
         }
-        catch(error){
-            logger.error("Cancel Booking Error", error);
-            return new Promise((resolve, reject) => reject());
+        else{
+            throw new Error('Unknown error');
         }
     }
 
