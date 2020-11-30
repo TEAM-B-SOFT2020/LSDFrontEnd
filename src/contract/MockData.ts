@@ -68,14 +68,6 @@ function randomDateInFuturetToUnix() {
     var todayUnix2 = Math.floor(new Date(todayFormatted2).getTime()/1000.0);
     return todayUnix2;
 }
-    const departureAirport: IAirportIdentifier = { iata: 'AA-123' };
-    const arrivalAirport: IAirportIdentifier = { iata: 'BB-123' };
-
-    const departureAirport2: IAirportIdentifier = { iata: 'CC-123' };
-    const arrivalAirport2: IAirportIdentifier = { iata: 'DD-123' };
-
-    const departureAirport3: IAirportIdentifier = { iata: 'EE-123' };
-    const arrivalAirport3: IAirportIdentifier = { iata: 'FF-123' };     
 
     const carrier: ICarrierDetail = { iata: '1123', name: 'Carrier-1' };
     var today = new Date();
@@ -86,8 +78,8 @@ function randomDateInFuturetToUnix() {
     var todayUnix = Math.floor(new Date(todayFormatted).getTime()/1000.0);
 
     const flight1: IFlightSummary = {
-        departureAirport : departureAirport,
-        arrivalAirport : arrivalAirport,
+        departureAirport : ad2,
+        arrivalAirport : ad3,
         carrier,
         departureDate: todayUnix,
         arrivalDate: randomDateInFuturetToUnix(),
@@ -98,8 +90,8 @@ function randomDateInFuturetToUnix() {
     
     
     const flight2: IFlightSummary = {
-        departureAirport : departureAirport,
-        arrivalAirport : arrivalAirport,
+        departureAirport : ad2,
+        arrivalAirport : ad3,
         carrier,
         departureDate: todayUnix,
         arrivalDate: randomDateInFuturetToUnix(),
@@ -109,8 +101,8 @@ function randomDateInFuturetToUnix() {
     };
     
     const flight3: IFlightSummary = {
-        departureAirport : departureAirport2,
-        arrivalAirport : arrivalAirport2,
+        departureAirport : ad2,
+        arrivalAirport : ad3,
         carrier,
         departureDate: todayUnix,
         arrivalDate: randomDateInFuturetToUnix(),
@@ -121,8 +113,8 @@ function randomDateInFuturetToUnix() {
     
     
     const flight4: IFlightSummary = {
-        departureAirport : departureAirport,
-        arrivalAirport : arrivalAirport3,
+        departureAirport : ad2,
+        arrivalAirport : ad3,
         carrier,
         departureDate: todayUnix,
         arrivalDate: randomDateInFuturetToUnix(),
