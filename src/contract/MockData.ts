@@ -2,18 +2,10 @@ import IContract from 'contract';
 import IAirportDetail from 'contract/src/DTO/IAirportDetail';
 import IBookingDetail from 'contract/src/DTO/IBookingDetail';
 import ICarrierDetail from 'contract/src/DTO/ICarrierDetail';
-import IFlightBookingDetail from 'contract/src/DTO/IFlightBookingDetail';
-import IFlightPassenger from 'contract/src/DTO/IFlightPassenger';
 import IFlightSummary from 'contract/src/DTO/IFlightSummary';
-import IReservationDetail from 'contract/src/DTO/IReservationDetail';
 import IReservationSummary from 'contract/src/DTO/IReservationSummary';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
-import IBookingIdentifier from 'contract/src/IBookingIdentifier';
-import IFlightIdentifier from 'contract/src/IFlightIdentifier';
-import IPassenger from 'contract/src/IPassenger';
 import IPassengerIdentifier from 'contract/src/IPassengerIdentifier';
-import { uuid } from 'uuidv4';
-import logger from '../logger';
 
 
 var _BOOKINGLIST: IBookingDetail[] = [];
