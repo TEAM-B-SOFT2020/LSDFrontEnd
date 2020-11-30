@@ -1,6 +1,7 @@
 import { createClient } from '@node-rpc/client';
 import { jsonSerializer as serializer } from '@node-rpc/client/dist/serializers/jsonSerializer';
 import { axiosXHR as xhr } from '@node-rpc/client/dist/xhr/axios';
+import dotenv from 'dotenv';
 
 // classes, interfaces & functions
 import IContract from 'contract';
@@ -14,10 +15,9 @@ import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
 import IPassengerIdentifier from 'contract/src/IPassengerIdentifier';
-
 import logger from '../logger';
 
-
+dotenv.config();
 
 // RPC Configuration
 const endpoint: string = process.env.RPC_HOST || 'Default string, throws error!';
