@@ -1,5 +1,13 @@
 version: '3'
 services:
+  app:
+    image: node:12-alpine
+    command: sh -c "apk add git && yarn install && yarn add TEAM-B-SOFT2020/LSDContract && yarn dev"
+    ports:
+      - 4000:4000
+    working_dir: /app
+    volumes:
+      - ./:/app
   prometheus:
     image: "prom/prometheus"
     ports:
@@ -12,5 +20,6 @@ services:
       - prometheus
     ports:
      - "3000:3000"
+
 volumes:
   data:
