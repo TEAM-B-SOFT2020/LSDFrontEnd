@@ -5,7 +5,7 @@ import Contract from "../contract/ContractMock";
 import ICarrierDetail from "contract/src/DTO/ICarrierDetail";
 const contract: IContract = new Contract();
 // creates a block that groups together several related tests
-describe('Example Test for Github Actions', () => {	
+describe('CARRIER TEST', () => {	
 	test('TEST : GET - SK', async () => {
 		let result = await contract.getCarrierInformation('SK');
 		const expected: ICarrierDetail = {iata : "SK", name : "Scandinavian Airlines"} ;
@@ -13,6 +13,3 @@ describe('Example Test for Github Actions', () => {
 	});
 
 });
-
-
-

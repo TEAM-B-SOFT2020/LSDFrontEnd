@@ -60,6 +60,8 @@ export default class ContractMock implements IContract{
     async getFlightsAvailable(departure: IAirportIdentifier, arrival: IAirportIdentifier, depart: number): Promise<IFlightSummary[]> {
         try {
             let availableFlightList = _FLIGHTLIST.filter(airport => airport.departureAirport.iata == departure.iata && airport.arrivalAirport.iata == arrival.iata && airport.departureDate == Math.floor(new Date(depart).getTime()/1000.0));
+            console.log(availableFlightList)
+            console.log(availableFlightList)
             return new Promise((resolve, reject) => resolve(availableFlightList));
         } catch (error) {
             logger.error(error);
@@ -92,9 +94,10 @@ export default class ContractMock implements IContract{
             })
             
 
-        flightPassengers = Object.assign(flightPassengers, passList);
-        flightPassengers.forEach(x => {
-            x.pnr = uuid()
+            flightPassengers = Object.assign(flightPassengers, passList);
+            flightPassengers.forEach(x => {
+            let pnr : string[] = uuid().split("-");
+            x.pnr = pnr[0];
         });
         
         //Hardcoded Carrier
@@ -102,8 +105,6 @@ export default class ContractMock implements IContract{
         const departureAirport: IAirportIdentifier = { iata: 'Gatwick' };
         const arrivalAirport: IAirportIdentifier = { iata: 'Heathrow' };
         const flightBooking1 : IFlightBookingDetail = {passengers : flightPassengers,carrier,departureDate: 5,arrivalDate: 10,arrivalAirport : arrivalAirport,departureAirport : departureAirport,flightCode: 'bdc123'};
-        
-
 
         flightBookings.push(flightBooking1);
             

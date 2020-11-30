@@ -69,7 +69,6 @@ function randomDateInFuturetToUnix() {
     return todayUnix2;
 }
 
-    const carrier: ICarrierDetail = { iata: '1123', name: 'Carrier-1' };
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -78,9 +77,9 @@ function randomDateInFuturetToUnix() {
     var todayUnix = Math.floor(new Date(todayFormatted).getTime()/1000.0);
 
     const flight1: IFlightSummary = {
-        departureAirport : ad2,
-        arrivalAirport : ad3,
-        carrier,
+        departureAirport : _AIRPORTS[1],
+        arrivalAirport : _AIRPORTS[2],
+        carrier : _CARRIERS[0],
         departureDate: todayUnix,
         arrivalDate: randomDateInFuturetToUnix(),
         availableSeats: 100,
@@ -90,9 +89,9 @@ function randomDateInFuturetToUnix() {
     
     
     const flight2: IFlightSummary = {
-        departureAirport : ad2,
-        arrivalAirport : ad3,
-        carrier,
+        departureAirport : _AIRPORTS[1],
+        arrivalAirport : _AIRPORTS[2],
+        carrier : _CARRIERS[1],
         departureDate: todayUnix,
         arrivalDate: randomDateInFuturetToUnix(),
         availableSeats: 100,
@@ -101,9 +100,9 @@ function randomDateInFuturetToUnix() {
     };
     
     const flight3: IFlightSummary = {
-        departureAirport : ad2,
-        arrivalAirport : ad3,
-        carrier,
+        departureAirport : _AIRPORTS[1],
+        arrivalAirport : _AIRPORTS[2],
+        carrier : _CARRIERS[3],
         departureDate: todayUnix,
         arrivalDate: randomDateInFuturetToUnix(),
         availableSeats: 9,
@@ -113,9 +112,9 @@ function randomDateInFuturetToUnix() {
     
     
     const flight4: IFlightSummary = {
-        departureAirport : ad2,
-        arrivalAirport : ad3,
-        carrier,
+        departureAirport : _AIRPORTS[1],
+        arrivalAirport : _AIRPORTS[2],
+        carrier : _CARRIERS[4],
         departureDate: todayUnix,
         arrivalDate: randomDateInFuturetToUnix(),
         availableSeats: 100,

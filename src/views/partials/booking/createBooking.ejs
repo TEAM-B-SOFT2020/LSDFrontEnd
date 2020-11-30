@@ -10,9 +10,19 @@
 		<main role="main" class="flex-shrink-0">
 			<div class="container">
 				<form action="/booking/create" method="POST">
-					<input type="hidden" name="reservationId" value='{<%= reservation.id %>}''>
+					<input type="hidden" name="reservationId" value='{<%= reservation.id %>}'>
+					<h5>Payment</h5>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+						  <label for="creditCardNumberInput">Creaditcard Number</label>
+						  <input type="number" class="form-control" id="creditCardNumberInput" placeholder="Credit Card Number" required name="creditCardNumber">
+						</div>
+						<div class="form-group col-md-6">
+						  <label for="frequentFlyerNumberInput">Last Name</label>
+						  <input type="number" class="form-control" id="frequentFlyerNumberInput" placeholder="Frequent Flyer Number" required autocomplete="false" name="frequentFlyerNumber">
+						</div>
+					  </div>
 					<div id="passenger-container">
-					  <h5 class="text-center mb-4">Destination</h3>
 					  <div class="form-row">
 						<div class="form-group col-md-6">
 						  <label for="firstnameInput">First Name</label>
@@ -20,11 +30,12 @@
 						</div>
 						<div class="form-group col-md-6">
 						  <label for="lastnameInput">Last Name</label>
+						  <span class="float-right text-muted text-lowercase	">[Passenger-1]</span>
 						  <input type="text" class="form-control" id="lastnameinput" placeholder="Lastname" required autocomplete="false" name="passenger[1][last_name]">
 						</div>
 					  </div>
 					</div>
-					<a onclick="addPassengerToForm()"class="btn btn-link float-right" >[+] Add an extra passenger</a>
+					<a id="addPassengerBtn" onclick="addPassengerToForm()"class="btn btn-link float-right" >[+] Add an extra passenger</a>
 					<button type="submit" class="btn btn-primary">Next</button>
 				  </form>
 			</div>
@@ -34,6 +45,10 @@
 		<script>
 			let i = 2;
 			function addPassengerToForm() {
+				//Remove button when the 9th passenger is added
+				if(i == 9) {
+					document.getElementById("addPassengerBtn").remove();
+				}
 				let template = `
 				  <div class="form-row">
 					  <div class="form-group col-md-6">
@@ -42,6 +57,7 @@
 					  </div>
 					  <div class="form-group col-md-6">
 						<label for="lastnameInput">Last Name</label>
+						<span class="float-right text-muted text-lowercase">[Passenger-${i}]</span>
 						<input type="text" class="form-control" id="lastnameinput" placeholder="Lastname" required autocomplete="false" name="passenger[${i}][last_name]">
 					  </div>
 					</div>

@@ -44,8 +44,11 @@ router.get('/get/:bookingId', async (req, res) => {
 });
 
 router.post('/flight', async (req, res) => {
-    const departureAirport : IAirportIdentifier = {iata: req.body.departureAirport}
-    const arrivalAirport : IAirportIdentifier = {iata: req.body.arrivalAirport}
+    let da : string = req.body.departureAirport.toUpperCase();
+    let aa : string = req.body.arrivalAirport.toUpperCase();
+
+    const departureAirport : IAirportIdentifier = {iata: da}
+    const arrivalAirport : IAirportIdentifier = {iata: aa}
     const departureDate : number  = req.body.departureDate;
     const availableFlights = await mock.getFlightsAvailable(departureAirport, arrivalAirport, departureDate);
     const content: object = {availableFlights};
@@ -68,6 +71,9 @@ router.post('/reserve', async (req, res) => {
 router.post('/create', async (req, res) => {
     // stephan syntax:: just a complex way to make a simple list    
     //Makes a mock of the ContractMock called mock
+
+    let creditCardNumber = req.body.creditCardNumber;
+    let ffNumber = req.body.frequentFlyerNumber;
     let passengerList : IPassenger[] = req.body.passenger;
     let reservationDetailList : IReservationDetail[] = [];
     let reservationDetail : IReservationDetail = {
@@ -75,7 +81,7 @@ router.post('/create', async (req, res) => {
         passengers: passengerList
     }; 
     reservationDetailList.push(reservationDetail)
-    const booking = await mock.createBooking(reservationDetailList, 12312312);
+    const booking = await mock.createBooking(reservationDetailList, creditCardNumber, ffNumber);
     res.redirect("/booking/get/" + booking.id);
 });
 
