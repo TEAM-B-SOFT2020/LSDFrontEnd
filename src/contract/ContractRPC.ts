@@ -58,8 +58,7 @@ export default class ContractRPC implements IContract {
             else if(response?.type === 'fail')
             {
 
-            logger.error("Get airport information error: " + response?.error + 
-            "--- User input was: " + iata);
+            logger.error("Get airport information error: " + response?.error + "--- User input was: " + iata);
             throw new Error(response?.code + ': ' + response?.error);                
         }
         else{

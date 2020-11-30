@@ -45,9 +45,11 @@ export default class ContractMock implements IContract{
 
     async getAirportInformation(iata: string): Promise<IAirportDetail> {
         try {
-            let airportDetails = _AIRPORTS.find(airport => airport.iata.toLowerCase() === iata.toLowerCase())
+            let airportDetails = _AIRPORTS.find(airport => airport.iata.toUpperCase() === iata.toUpperCase())
+            if(!airportDetails) {
+                throw new Error("Error");
+            }
             return new Promise((resolve, reject) => resolve(airportDetails));
-
         } catch(error) {
             logger.error(error);
             return new Promise((resolve, reject) => reject());

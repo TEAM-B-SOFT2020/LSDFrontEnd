@@ -16,20 +16,19 @@ var _AIRPORTS : IAirportDetail[] = [];
 var _PASSENGERS : IPassengerIdentifier[] = [];
 
 //CARRIERS
-const carrierDetail0: ICarrierDetail ={
-    iata: "SAS140",
-    name: 'SAS'
-}
+const cd1: ICarrierDetail ={iata: "SK", name: 'Scandinavian Airlines'}
+const cd2: ICarrierDetail ={iata: "FR", name: 'Ryanair'}
+const cd3: ICarrierDetail ={iata: "AS", name: 'Alaska Airlines'}
+const cd4: ICarrierDetail ={iata: "AA", name: 'American Airlines'}
+const cd5: ICarrierDetail ={iata: "DA", name: 'Delta Airlines'}
+const cd6: ICarrierDetail ={iata: "HA", name: 'Hawaii Airlines'}
+const cd7: ICarrierDetail ={iata: "WN", name: 'Southwest Airlines'}
+const cd8: ICarrierDetail ={iata: "NK", name: 'Spirit Airlines'}
+const cd9: ICarrierDetail ={iata: "UA", name: 'United Airlines'}
+const cd10: ICarrierDetail ={iata: "FX", name: 'FedEx Express'}
 
-const carrierDetail1: ICarrierDetail ={
-    iata: "NW139",
-    name: 'Norwegian'
-}
-const carrierDetail2: ICarrierDetail ={
-    iata: "SS150",
-    name: 'Sunset'
-}
-_CARRIERS.push(carrierDetail0,carrierDetail1,carrierDetail2);
+
+_CARRIERS.push(cd1,cd2,cd3,cd4,cd5,cd6,cd7,cd8,cd9,cd10);
 
 //Passangers
 const passenger0: IPassengerIdentifier= {
@@ -44,27 +43,19 @@ const passenger2: IPassengerIdentifier={
 _PASSENGERS.push(passenger0,passenger1,passenger2);
 
 
-
-
 //AIRPORTS
-const airportDetails0: IAirportDetail ={
-    iata: "*",
-    name: "Search airport",
-    timeZone: "GMT+1"
-}
-
-const airportDetails1: IAirportDetail ={
-    iata: "lol",
-    name: "lolland",
-    timeZone: "GMT+1"}
-
-
-const airportDetails2: IAirportDetail ={
-    iata: "CPH",
-    name: "Copenhagen",
-    timeZone: "GMT+1"
-}
-_AIRPORTS.push(airportDetails0,airportDetails1, airportDetails2);
+const ad1: IAirportDetail ={iata: "*", name: "Search airport", timeZone: "GMT+1"}
+const ad2: IAirportDetail ={iata: "CPH", name: "Copenhagen Airport", timeZone: "Europe/Copenhagen"}
+const ad3: IAirportDetail ={iata: "AAL", name: "Aalborg Airport", timeZone: "Europe/Copenhagen"}
+const ad4: IAirportDetail ={iata: "LHR", name: "London Heathrow Airport", timeZone: "Europe/London"}
+const ad5: IAirportDetail ={iata: "AAR", name: "Aarhus Airport", timeZone: "Europe/Copenhagen"}
+const ad6: IAirportDetail ={iata: "BIL", name: "Billund Airpirt", timeZone: "Europe/Copenhagen"}
+const ad7: IAirportDetail ={iata: "RNN", name: "Bornholm Airpirt", timeZone: "Europe/Copenhagen"}
+const ad8: IAirportDetail ={iata: "RKE", name: "Roskilde Airpirt", timeZone: "Europe/Copenhagen"}
+const ad9: IAirportDetail ={iata: "EBJ", name: "Esbjerg Airpirt", timeZone: "Europe/Copenhagen"}
+const ad10: IAirportDetail ={iata: "KRP", name: "Karup Airpirt", timeZone: "Europe/Copenhagen"}
+const ad11: IAirportDetail ={iata: "BYR", name: "Læsø Airpirt", timeZone: "Europe/Copenhagen"}
+_AIRPORTS.push(ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ad9,ad10,ad11);
 
 // FLIGHTLIST
 function randomDateInFuturetToUnix() {
