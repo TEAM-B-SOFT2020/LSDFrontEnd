@@ -7,7 +7,6 @@
   "license": "MIT",
   "dependencies": {
     "@node-rpc/client": "^2.3.1",
-    "LSDFrontEnd": "https://github.com/TEAM-B-SOFT2020/LSDFrontEnd",
     "axios": "^0.21.0",
     "contract": "TEAM-B-SOFT2020/LSDContract",
     "dotenv": "^8.2.0",
@@ -50,6 +49,6 @@
     "dev": "yarn ts-node src/index.ts",
     "test": "jest",
     "git": "git add -A && git commit -m \"Quick Fix Commit\" && git push",
-    "monitor": "docker-compose up"
+    "monitor" : "docker-compose up"
   }
 }
