@@ -9,7 +9,7 @@ import IFlightPassenger from 'contract/src/DTO/IFlightPassenger';
 import IFlightSummary from 'contract/src/DTO/IFlightSummary';
 import IReservationDetail from 'contract/src/DTO/IReservationDetail';
 import IReservationSummary from 'contract/src/DTO/IReservationSummary';
-import NotFoundError from 'contract/src/ETO/NotFoundError';
+
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';

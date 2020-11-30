@@ -20,7 +20,7 @@ router.use(express.json());
 router.get('/info', async (req, res) => {
 	try {
         console.log(__dirname)
-        fs.readFile("C:/Users/thoma/Documents/GitHub/LSDFrontEnd/logs/info.log", "utf8", function(err, data){
+        fs.readFile("logs/info.log", "utf8", function(err, data){
             if(err) throw err;
             res.send(data);
         });
@@ -35,7 +35,7 @@ router.get('/info', async (req, res) => {
 router.get('/error', async (req, res) => {
 	try {
         console.log(__dirname)
-        fs.readFile("C:/Users/thoma/Documents/GitHub/LSDFrontEnd/logs/error.log", "utf8", function(err, data){
+        fs.readFile("logs/error.log", "utf8", function(err, data){
             if(err) throw err;
             res.send(data);
         });
