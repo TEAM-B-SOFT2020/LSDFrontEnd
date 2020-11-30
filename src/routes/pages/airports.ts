@@ -1,7 +1,7 @@
 // libraries
 import * as express from 'express';
 import IContract from 'contract';
-import Contract from "../../contract/ContractMock";
+import Contract from "../../contract";
 
 
 const contract: IContract = new Contract();

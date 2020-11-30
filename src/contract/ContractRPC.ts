@@ -26,21 +26,25 @@ const rpc = createClient<IContract>({ endpoint, serializer, xhr });
 
 export default class ContractRPC implements IContract {
 
-    async getCarrierInformation(iata: string): Promise<ICarrierDetail> {
-        try {
+    async getCarrierInformation(iata: string): Promise<ICarrierDetail> {       
+       
             const response: any = await rpc.getCarrierInformation(iata).call();
             // ATT:: handle all errors...
 	        // if (response?.success) throw new NotFoundError('Carrier not found');
-
-		    // duck typing -> le Quack 🦆
-            const carrierDetail: ICarrierDetail = response?.data;
-            logger.info("Got Carrier Information", carrierDetail);
-            return new Promise((resolve, reject) => resolve(carrierDetail))
-        }
-        catch(error){
-            logger.error("Get Carrier Information", error);
-            return new Promise((resolve, reject) => reject());
-        }
+            // duck typing -> le Quack 🦆
+            if(response?.type === 'success'){
+                let carrierDetail= response?.data;
+                logger.info("Got Carrier Information:", carrierDetail);
+                return carrierDetail;
+            }
+            else if(response?.type === 'fail'){
+                logger.error("Get Carrier Information: " + response?.error + 
+                "--- User input was: " + iata);
+                throw new Error(response?.code + ': ' + response?.error);                
+            }
+            else{
+                throw new Error('Unknown error');
+            }
     }
 
     async getAirportInformation(iata: string): Promise<IAirportDetail> {
@@ -48,11 +52,11 @@ export default class ContractRPC implements IContract {
            const response: any = await rpc.getAirportInformation(iata).call();
            const airportDetail: IAirportDetail = response?.data;
            logger.info("Got Airport Information", airportDetail);
-           return new Promise((resolve, reject) => resolve(airportDetail));    
+           return new Promise((resolve) => resolve(airportDetail));    
        }
        catch(error){
             logger.error("Get Airport Information", error);
-           return new Promise((resolve, reject) => reject());
+           return new Promise((reject) => reject());
        }
     }
 
@@ -87,7 +91,7 @@ export default class ContractRPC implements IContract {
 
     async createBooking(reservationDetails: IReservationDetail[], creditCardNumber: number): Promise<IBookingDetail> {
         try{
-            const response: any = await rpc.createBooking(reservationDetails,creditCardNumber);
+            const response: any = await rpc.createBooking(reservationDetails,creditCardNumber).call();
             const bookingDetail: IBookingDetail = response?.data;
             logger.info("Created Booking", bookingDetail);
             return new Promise((resolve, reject) => resolve(bookingDetail));

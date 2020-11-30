@@ -10,12 +10,17 @@
 		<main role="main" class="flex-shrink-0">
 			<div class="container">
 				<h4>Find carrier by id</h4>
-                <form action="/carriers/get" method="POST">
+                <form action="/carriers" method="POST">
                     <label for="header">Carrier IATA</label>
                     <input name="iata" type="string" placeholder="iata code" required />        
                    <input type="submit" />
-                  </form>
-				 				
+				  </form>
+				  <% if(carrier.name){%> 
+					<%= carrier.name %>
+				  <%}else { %> 
+					No carriers found. 
+					<% } %>
+				 			 				
 			</div>
 		</main>
 		<%- include('partials/footer.ejs') %>

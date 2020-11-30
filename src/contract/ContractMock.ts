@@ -9,6 +9,7 @@ import IFlightPassenger from 'contract/src/DTO/IFlightPassenger';
 import IFlightSummary from 'contract/src/DTO/IFlightSummary';
 import IReservationDetail from 'contract/src/DTO/IReservationDetail';
 import IReservationSummary from 'contract/src/DTO/IReservationSummary';
+import NotFoundError from 'contract/src/ETO/NotFoundError';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
@@ -28,14 +29,18 @@ const _PASSENGERS : IPassengerIdentifier[] = PASSENGERS;
 
 export default class ContractMock implements IContract{
     async getCarrierInformation(iata: string): Promise<ICarrierDetail> {       
-        try { 
+        try {             
             let carrierDetail = _CARRIERS.find(carrier => carrier.iata.toLocaleLowerCase() === iata.toLocaleLowerCase())
-            if(carrierDetail == null){return new Promise((resolve, reject) => reject('Carrier Not Found'));}
-            return new Promise((resolve, reject) => resolve(carrierDetail))
+            if(!carrierDetail){
+                throw new Error('Carrier not found')
+            }
+            return new Promise((resolve) => resolve(carrierDetail))
+            
         } catch(error){
-            logger.error(error);
-            return new Promise((resolve, reject) => reject('No connection to the database'));
-        }
+            logger.error(error.message);
+            return new Promise((reject) => reject(error.message));
+        } 
+        
     }
 
     async getAirportInformation(iata: string): Promise<IAirportDetail> {

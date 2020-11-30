@@ -1,7 +1,7 @@
 // libraries
 import * as express from 'express';
 import IContract from 'contract';
-import Contract from "../../contract/ContractMock";
+import Contract from "../../contract";
 
 
 const contract: IContract = new Contract();
@@ -14,20 +14,19 @@ router.get('/', async (req, res) => {
     
     //Makes a mock of the ContractMock called mock
     
-
+    let carrier = {};
     // uses the mock to get carrier information
-    const carrier = await contract.getCarrierInformation("test");
-
+    
     //create a new object that contains the object carrier
     const content: object = { carrier };
+    console.log(content)
     
     //Return the content to the carriers view
-	res.render('carriers');
+	res.render('carriers', content);
 });
 
-router.post('/get', async (req, res) => {
+router.post('/', async (req, res) => {
     // stephan syntax:: just a complex way to make a simple list
-    
     //Makes a mock of the ContractMock called mock
     
     // uses the mock to get carrier information
@@ -35,7 +34,7 @@ router.post('/get', async (req, res) => {
     
     //create a new object that contains the object carrier
     const content: object = { carrier };
-    
+    console.log(content)
     //Return the content to the carriers view
 	res.render('carriers', content);
 });
