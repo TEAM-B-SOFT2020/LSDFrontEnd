@@ -19,6 +19,7 @@ import { uuid } from 'uuidv4';
 import logger from '../logger';
 
 import {AIRPORTS, BOOKINGLIST, CARRIERS, FLIGHTLIST, PASSENGERS, RESERVATIONS} from './MockData';
+import { idText } from 'typescript';
 
 const _BOOKINGLIST: IBookingDetail[] = BOOKINGLIST;
 const _FLIGHTLIST: IFlightSummary[] = FLIGHTLIST;
@@ -159,29 +160,23 @@ export default class ContractMock implements IContract{
     }
 
     async cancelBooking(passenger: IPassengerIdentifier): Promise<void> {
-        /*const bookingTemp = this.getBooking(passenger);
-        
         try {
             var index = _BOOKINGLIST.findIndex(function(x) {
-                let availableBooking = _BOOKINGLIST.find(booking => booking.id === bookingTemp )
-                var index2 = x.flightBookings.findIndex(function(y) {
-                })
-            });
+                x.flightBookings.forEach(element => {
+                    element.passengers.forEach(element => {
+                        return passenger === passenger;
+                    });
+                });
+            })
 
             if(index !== -1) {
                 _BOOKINGLIST.splice(index, 1);
-                logger.info("Cancel Booking", _BOOKINGLIST);
+                logger.info("Cancelled Booking", _BOOKINGLIST);
                 return new Promise((resolve, reject) => resolve());
             }
         } catch (error) {
-            logger.info("Cancel Booking", error);
-            return new Promise((resolve, reject) => reject());
-        }*/
-        return new Promise((resolve,reject) => resolve());
-
-
-        
-
-
+            logger.error("Cancel Booking Error", error);
+            return new Promise((resolve,reject) => reject(error)); 
+        }  
     }
 }
