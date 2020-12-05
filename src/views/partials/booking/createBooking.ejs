@@ -10,7 +10,7 @@
 		<main role="main" class="flex-shrink-0">
 			<div class="container">
 				<form action="/booking/create" method="POST">
-					<input type="hidden" name="reservationId" value='{<%= reservation.id %>}'>
+					<input type="hidden" name="reservationId" value='<%= reservation.id %>'>
 					<h5>Payment</h5>
 					<div class="form-row">
 						<div class="form-group col-md-6">
@@ -19,55 +19,29 @@
 						</div>
 						<div class="form-group col-md-6">
 						  <label for="frequentFlyerNumberInput">Last Name</label>
-						  <input type="number" class="form-control" id="frequentFlyerNumberInput" placeholder="Frequent Flyer Number" required autocomplete="false" name="frequentFlyerNumber">
+						  <input type="number" class="form-control" id="frequentFlyerNumberInput" placeholder="Frequent Flyer Number" required autocomplete="false" name="ffNumber">
 						</div>
 					  </div>
 					<div id="passenger-container">
-					  <div class="form-row">
-						<div class="form-group col-md-6">
-						  <label for="firstnameInput">First Name</label>
-						  <input type="text" class="form-control" id="firstnameinput" placeholder="Firstname" required name="passenger[1][first_name]">
+						<% for(var i=0; i < travelerCount; i++) { %>
+						<% var x = "passenger[" + i + "]" %>
+					  	<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="firstnameInput">First Name</label>
+								<input type="text" class="form-control" id="firstnameinput" placeholder="Firstname" required name="<%= x %>[firstName]">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="lastnameInput">Last Name</label><span class="float-right text-muted">Passenger <%= i+1%></span>
+								<input type="text" class="form-control" id="lastnameinput" placeholder="Lastname" required autocomplete="false" name="<%= x %>[lastName]">
+							</div>
 						</div>
-						<div class="form-group col-md-6">
-						  <label for="lastnameInput">Last Name</label>
-						  <span class="float-right text-muted text-lowercase	">[Passenger-1]</span>
-						  <input type="text" class="form-control" id="lastnameinput" placeholder="Lastname" required autocomplete="false" name="passenger[1][last_name]">
-						</div>
-					  </div>
+						<%}%>
 					</div>
-					<a id="addPassengerBtn" onclick="addPassengerToForm()"class="btn btn-link float-right" >[+] Add an extra passenger</a>
 					<button class="btn btn-secondary" type="submit">Create Booking</button>
 				  </form>
 			</div>
 		</main>
 		<%- include('../../partials/footer.ejs') %>
 		<%- include('../../imports/bootstrap-scripts.ejs') %>
-		<script>
-			let i = 2;
-			function addPassengerToForm() {
-				//Remove button when the 9th passenger is added
-				if(i == 9) {
-					document.getElementById("addPassengerBtn").remove();
-				}
-				let template = `
-				  <div class="form-row">
-					  <div class="form-group col-md-6">
-						<label for="firstnameInput">First Name</label>
-						<input type="text" class="form-control" id="firstnameinput" placeholder="Firstname" required name="passenger[${i}][first_name]">
-					  </div>
-					  <div class="form-group col-md-6">
-						<label for="lastnameInput">Last Name</label>
-						<span class="float-right text-muted text-lowercase">[Passenger-${i}]</span>
-						<input type="text" class="form-control" id="lastnameinput" placeholder="Lastname" required autocomplete="false" name="passenger[${i}][last_name]">
-					  </div>
-					</div>
-				`;
-				let container = document.getElementById('passenger-container');
-				let div = document.createElement('div');
-				div.innerHTML = template;
-				container.appendChild(div);
-				i++;
-			}
-		  </script>
 	</body>		
 </html>

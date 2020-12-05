@@ -1,88 +1,89 @@
 // libraries
 import * as express from 'express';
-import * as contract from 'contract';
-import { uuid } from 'uuidv4';
-
-import ContractMock from '../../contract/ContractMock';
+import IContract from 'contract';
+import Contract from "../../contract";
 import IBookingIdentifier from 'contract/src/IBookingIdentifier';
 import IReservationDetail from 'contract/src/DTO/IReservationDetail';
-import { visitFunctionBody } from 'typescript';
 import IPassenger from 'contract/src/IPassenger';
-import IFlightPassenger from 'contract/src/DTO/IFlightPassenger';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
 import IPassengerIdentifier from 'contract/src/IPassengerIdentifier';
 
 // classes, interfaces & functions
 const router: express.Router = express.Router();
-const mock = new ContractMock();
+//const mock = new ContractMock();
+
+const contract: IContract = new Contract();
 
 router.get('/', async (req, res) => {
-    /*
-    // stephan syntax:: just a complex way to make a simple list    
-    //Makes a mock of the ContractMock called mock
-    const mock = new ContractMock();
-    // uses the mock to get carrier information
-    const bookingId: IBookingIdentifier = { id: 'test' };    
-    const booking = await mock.getBooking(bookingId);
-    //create a new object that contains the object carrier
-    const content: object = {booking };    
-    //Return the content to the carriers view
-    */
 	res.render('booking');
 });
 
 
 router.get('/get/:bookingId', async (req, res) => {
-    
-    // stephan syntax:: just a complex way to make a simple list    
-    //Makes a mock of the ContractMock called mock
-    let bookingId: IBookingIdentifier = { id: req.params.bookingId };
-    const booking = await mock.getBookingOnBookingId(bookingId);
-    const content: object = {booking};
-    res.render('partials/booking/getBooking', content);
+    let booking;
+    try {
+        let pnr: IPassengerIdentifier = { pnr: req.params.booking };
+        booking = await contract.getBooking(pnr);
+    } finally {
+        const content: object = {booking};
+        res.render('partials/booking/getBooking', content);
+    }
 });
 
 router.post('/flight', async (req, res) => {
     let da : string = req.body.departureAirport.toUpperCase();
     let aa : string = req.body.arrivalAirport.toUpperCase();
-
-    const departureAirport : IAirportIdentifier = {iata: da}
-    const arrivalAirport : IAirportIdentifier = {iata: aa}
-    const departureDate : number  = req.body.departureDate;
-    const availableFlights = await mock.getFlightsAvailable(departureAirport, arrivalAirport, departureDate);
-    const content: object = {availableFlights};
-    res.render('partials/booking/chooseFlight', content);
+    let travelerCount : number = req.body.travelerCount;
+    console.log(req.body)
+    let availableFlights;
+    try {
+        const departureAirport : IAirportIdentifier = {iata: da}
+        const arrivalAirport : IAirportIdentifier = {iata: aa}
+        const departureDate : number  = req.body.departureDate;
+        availableFlights = await contract.getFlightsAvailable(departureAirport, arrivalAirport, departureDate);
+        const content: object = {availableFlights, travelerCount};
+        res.render('partials/booking/chooseFlight', content);
+    } catch {
+        res.render("partials/error");
+    }
 });
 
 
 router.post('/reserve', async (req, res) => {
-    let selectedFlight = JSON.parse(req.body.flight);
-    const flight : IFlightIdentifier = {
-        flightCode : selectedFlight.flightCode
+    let reservation;
+    let travelerCount : number = JSON.parse(req.body.travelerCount);
+    try {
+        let selectedFlight = JSON.parse(req.body.flight);
+        const flightCode: string = selectedFlight.flightCode;
+        const flightIdentifier: IFlightIdentifier = { flightCode };
+        reservation = await contract.reserveFlight(flightIdentifier, travelerCount);
+
+        const content: object = {reservation, travelerCount};
+        res.render('partials/booking/createBooking', content);
+    } catch {
+        res.render("partials/error")
     }
-    const seatCost = selectedFlight.seatPrice;
-    const reservation = await mock.reserveFlight(flight, seatCost);
-    const content: object = {message: "Reservation Success", reservation};
-    res.render('partials/booking/createBooking', content);
-    
 });
 
 router.post('/create', async (req, res) => {
-    // stephan syntax:: just a complex way to make a simple list    
-    //Makes a mock of the ContractMock called mock
+    let booking;
+    try {
+        let creditCardNumber = req.body.creditCardNumber;
+        let ffNumber = req.body.ffNumber;    
+        let passengers : IPassenger[] = Object.assign(req.body.passenger);
 
-    let creditCardNumber = req.body.creditCardNumber;
-    let ffNumber = req.body.frequentFlyerNumber;
-    let passengerList : IPassenger[] = req.body.passenger;
-    let reservationDetailList : IReservationDetail[] = [];
-    let reservationDetail : IReservationDetail = {
-        id: req.body.reservationId,
-        passengers: passengerList
-    }; 
-    reservationDetailList.push(reservationDetail)
-    const booking = await mock.createBooking(reservationDetailList, creditCardNumber, ffNumber);
-    res.redirect("/booking/get/" + booking.id);
+        let reservationDetail : IReservationDetail = {
+            id: req.body.reservationId,
+            passengers: passengers
+        };
+
+        let reservationDetailList : IReservationDetail[] = [reservationDetail];
+        booking = await contract.createBooking(reservationDetailList, creditCardNumber, ffNumber);
+        res.redirect("/booking/get/" + booking.id);
+    } catch {
+        res.render("partials/error");
+    }
 });
 
 
@@ -90,7 +91,7 @@ router.post('/cancel', async (req, res) => {
     // stephan syntax:: just a complex way to make a simple list    
     //Makes a mock of the ContractMock called mock
     let bookingId: IPassengerIdentifier = { pnr: req.body.bookingId };
-    await mock.cancelBooking(bookingId);
+    await contract.cancelBooking(bookingId);
     const content: object = {message: "Booking [" + bookingId.pnr + "] has been cancelled"};
     res.render('partials/booking/cancelBooking', content);
 });

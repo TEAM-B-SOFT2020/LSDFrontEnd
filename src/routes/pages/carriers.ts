@@ -10,33 +10,25 @@ const contract: IContract = new Contract();
 const router: express.Router = express.Router();
 
 router.get('/', async (req, res) => {
-    // stephan syntax:: just a complex way to make a simple list
-    
-    //Makes a mock of the ContractMock called mock
-    
+    // stephan syntax:: just a complex way to make a simple list    
+    //Makes a mock of the ContractMock called mock    
     let carrier = {};
-    // uses the mock to get carrier information
-    
+    // uses the mock to get carrier information    
     //create a new object that contains the object carrier
     const content: object = { carrier };
-    console.log(content)
-    
     //Return the content to the carriers view
 	res.render('carriers', content);
 });
 
 router.post('/', async (req, res) => {
-    // stephan syntax:: just a complex way to make a simple list
-    //Makes a mock of the ContractMock called mock
-    
-    // uses the mock to get carrier information
-    const carrier = await contract.getCarrierInformation(req.body.iata);
-    
-    //create a new object that contains the object carrier
-    const content: object = { carrier };
-    console.log(content)
-    //Return the content to the carriers view
-	res.render('carriers', content);
+    let carrier;
+    try {
+        let iata : String = req.body.iata;
+        carrier = await contract.getCarrierInformation(iata.toUpperCase());
+    } finally {
+        const content: object = { carrier };
+        res.render('carriers', content);
+    }
 });
 
 

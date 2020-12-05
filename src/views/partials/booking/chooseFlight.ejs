@@ -22,8 +22,9 @@
 		<%- include('../../partials/navbar.ejs', {active: "home"})  %>
 		<main role="main" class="flex-shrink-0">
 			<div class="container">
-                <h2>Found <%= availableFlights.length %> available flights</h2>
-				<form action="/booking/reserve" method="POST" class="mt-4">	
+				<h2>Found <%= availableFlights.length %> available flights</h2>
+				<form action="/booking/reserve" method="POST" class="mt-4">
+					<input type="hidden" name="travelerCount" value='<%= travelerCount %>'>
 					<% availableFlights.forEach((data) => { %>
 						<div id="flight-container" clas="form-group">
 							<div class="custom-control custom-radio w-100 mb-2">
@@ -79,8 +80,8 @@
 								</label>
 							</div>
 						</div>
-					<% }) %>	
-					<button class="btn btn-secondary" type="submit">Next</button>
+						<button class="btn btn-secondary" type="submit">Next</button>
+					<% }) %>
 					</div>
 				</form>
 			</div>

@@ -47,19 +47,16 @@ export default class ContractRPC implements IContract {
             }
     }
 
-    async getAirportInformation(iata: string): Promise<IAirportDetail> {
-   
+    async getAirportInformation(iata: string): Promise<IAirportDetail> {   
         const response: any = await rpc.getAirportInformation(iata).call();
            if(response?.type === 'success'){   
-            const airportDetail: IAirportDetail = response?.data;
-            logger.info("Got Airport Information: " +  airportDetail);
-            return airportDetail;
+                const airportDetail: IAirportDetail = response?.data;
+                logger.info("Got Airport Information: " +  airportDetail.iata);
+                return airportDetail;
             }
-            else if(response?.type === 'fail')
-            {
-
-            logger.error("Get airport information error: " + response?.error + "--- User input was: " + iata);
-            throw new Error(response?.code + ': ' + response?.error);                
+            else if(response?.type === 'fail') {
+                logger.error("Get airport information error: " + response?.error + "--- User input was: " + iata);
+                throw new Error(response?.code + ': ' + response?.error);                
         }
         else{
             throw new Error('Unknown error');
@@ -90,10 +87,10 @@ export default class ContractRPC implements IContract {
     async reserveFlight(id: IFlightIdentifier, amountSeats: number): Promise<IReservationSummary> {
               
         const response: any = await rpc.reserveFlight(id, amountSeats).call();
-        if(response?.type === 'success'){   
+        if(response?.type === 'success'){ 
          
             const reservationSummary: IReservationSummary = response?.data;
-            logger.info("Reserved Flight: " + reservationSummary)
+            logger.info("Reserved Flight: " + reservationSummary.id     )
             return new Promise((resolve, reject) => resolve(reservationSummary)); 
             }
             else if(response?.type === 'fail')
@@ -109,61 +106,51 @@ export default class ContractRPC implements IContract {
     }
 
     async createBooking(reservationDetails: IReservationDetail[], creditCardNumber: number): Promise<IBookingDetail> {
-                
         const response: any = await rpc.createBooking(reservationDetails,creditCardNumber).call();
-              
-        if(response?.type === 'success'){   
+        if(response.type === 'success'){   
          
-            const bookingDetail: IBookingDetail = response?.data;
-            logger.info("Created Booking: " + bookingDetail);
+            const bookingDetail: IBookingDetail = response.data;
+            logger.info("Created Booking: " + bookingDetail.id);
             return bookingDetail;
             }
-            else if(response?.type === 'fail')
+            else if(response.type === 'fail')
             {
-            logger.error("Create booking error: " + response?.error + 
-            "--- User input was: " + reservationDetails + " -- " + creditCardNumber);
-            throw new Error(response?.code + ': ' + response?.error);                
+            logger.error("Create booking error: " + response.error + "--- User input was: " + reservationDetails + " -- " + creditCardNumber);
+            throw new Error(response.code + ': ' + response.error);                
         }
         else{
             throw new Error('Unknown error');
         }
     }
 
-    async getBooking(passenger: IPassengerIdentifier): Promise<IBookingDetail> {
-       
-            const response: any = await rpc.getBooking(passenger);
-        if(response?.type === 'success'){        
-            const bookingDetail: IBookingDetail = response?.data;
+    async getBooking(passenger: IPassengerIdentifier): Promise<IBookingDetail> { 
+        const response: any = await rpc.getBooking(passenger);  
+        if(response.type === 'success'){        
+            const bookingDetail: IBookingDetail = response.data;
             logger.info("Got Booking: " + bookingDetail)
-            return bookingDetail;
-            }
-            else if(response?.type === 'fail')
-            {
-            logger.error("Get booking information error: " + response?.error + 
-            "--- User input was: " + passenger);
-            throw new Error(response?.code + ': ' + response?.error);                
+            return bookingDetail    ;
+        }
+        else if(response.type === 'fail')
+        {
+            logger.error("Get booking information error: " + response?.error + "--- User input was: " + passenger);
+            throw new Error(response.code + ': ' + response.error);                
         }
         else{
             throw new Error('Unknown error');
         }
     }
 
-    async getBookingOnBookingId(id: IBookingIdentifier): Promise<IBookingDetail>{
-       
-            const response: any = await rpc.getBookingOnBookingId(id);
-          
-      
-
-        if(response?.type === 'success'){        
-            const bookingDetail: IBookingDetail = response?.data;
+    async getBookingOnBookingId(id: IBookingIdentifier): Promise<IBookingDetail>{       
+        const response: any = await rpc.getBookingOnBookingId(id);  
+        if(response.type === 'success'){        
+            const bookingDetail: IBookingDetail = response.data;
             logger.info("Got Booking: " + bookingDetail)
             return bookingDetail;
-            }
-            else if(response?.type === 'fail')
-            {
-            logger.error("Get booking information error: " + response?.error + 
-            "--- User input was: " + id);
-            throw new Error(response?.code + ': ' + response?.error);                
+        }
+        else if(response.type === 'fail')
+        {
+            logger.error("Get booking information error: " + response?.error + "--- User input was: " + id);
+            throw new Error(response.code + ': ' + response.error);                
         }
         else{
             throw new Error('Unknown error');

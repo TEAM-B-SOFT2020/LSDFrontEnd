@@ -1,7 +1,7 @@
 // api reference:: https://jestjs.io/docs/en/api
 
 import IContract from "contract";
-import Contract from "../contract/ContractMock";
+import Contract from "../contract";
 import ICarrierDetail from "contract/src/DTO/ICarrierDetail";
 const contract: IContract = new Contract();
 // creates a block that groups together several related tests

@@ -14,13 +14,12 @@
                     <label for="header">Carrier IATA</label>
                     <input name="iata" type="string" placeholder="iata code" required />        
                    <input type="submit" />
-				  </form>
-				  <% if(carrier.name){%> 
+				</form>
+				<% if(carrier){ %>
 					<%= carrier.name %>
-				  <%}else { %> 
-					No carriers found. 
-					<% } %>
-				 			 				
+				<% } else { %>
+					<p>Found no airport...</p>
+				<% } %>				 			 				
 			</div>
 		</main>
 		<%- include('partials/footer.ejs') %>

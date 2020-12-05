@@ -1462,20 +1462,23 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"LSDFrontEnd@https://github.com/TEAM-B-SOFT2020/LSDFrontEnd":
+LSDFrontEnd@TEAM-B-SOFT2020/LSDFrontEnd:
   version "1.0.0"
-  resolved "https://github.com/TEAM-B-SOFT2020/LSDFrontEnd#60030a4f45f544f33b53dc3761a9e3f7fee7cd12"
+  resolved "https://codeload.github.com/TEAM-B-SOFT2020/LSDFrontEnd/tar.gz/5ac221e55b0689d97d26cd8d0cbf91e1fb8d6819"
   dependencies:
     "@node-rpc/client" "^2.3.1"
     axios "^0.21.0"
+    chromedriver "^87.0.0"
     contract TEAM-B-SOFT2020/LSDContract
     dotenv "^8.2.0"
     ejs "^3.1.5"
     express "^4.17.1"
     express-prometheus-middleware "^1.0.0"
     express-winston "^4.0.5"
+    geckodriver "^1.21.0"
     i "^0.3.6"
     prom-client "^12.0.0"
+    selenium-webdriver "^4.0.0-alpha.7"
     ts-jest "^26.4.4"
     ts-node "^9.0.0"
     typescript "^4.0.5"

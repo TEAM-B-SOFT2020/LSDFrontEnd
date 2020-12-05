@@ -9,9 +9,9 @@
 		<%- include('partials/navbar.ejs', {active: "flights"})  %>
 		<main role="main" class="flex-shrink-0">
 			<div class="container">
-				<h2><%= title %></h2>
-				<% if (flights.length) { %>
-					<p><strong>Flight count: <%= numbers %></strong></p>
+				<h2>Flights</h2>
+				<% if (flights) { %>
+					<p><strong>Flight count: <%= flights.length %></strong></p>
 					<div class="table-responsive">
 						<table class="table" id="table" data-toggle="table" data-sort-name="name" data-sort-order="desc" data-search="true">
 							<thead>
@@ -42,7 +42,9 @@
 							</tbody>
 						</table>
 						</div>
-				<% } %>		
+				<% } else { %>	
+					<p>No flights available</p>
+				<% } %>	
 			</div>
 		</main>
 		<%- include('partials/footer.ejs') %>

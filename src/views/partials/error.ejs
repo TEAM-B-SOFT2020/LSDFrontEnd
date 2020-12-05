@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+	<head>
+		<%- include('imports/bootstrap') %>
+		<title>LSD Frontend</title>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+	<head>
+	<body class="d-flex flex-column h-100"> 
+		<%- include('partials/navbar.ejs', {active: "home"})  %>
+		<main role="main" class="flex-shrink-0">
+			<div class="container">
+				<h2>Something went wrong...</h2>
+				<p>Please contact us if this keeps happening.</p>
+			</div>
+		</main>
+		<%- include('partials/footer.ejs') %>
+		<%- include('imports/bootstrap-scripts.ejs') %> 
+	</body>		
+</html>
