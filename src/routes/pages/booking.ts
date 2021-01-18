@@ -23,11 +23,18 @@ router.get('/', async (req, res) => {
 router.get('/get/:bookingId', async (req, res) => {
     let booking;
     try {
-        let pnr: IPassengerIdentifier = { pnr: req.params.booking };
-        booking = await contract.getBooking(pnr);
-    } finally {
+        const pnr: string = "B1BS34";
+        console.log(pnr);
+        let passengerIdentifier: IPassengerIdentifier = { pnr };
+        console.log(passengerIdentifier);
+        booking = await contract.getBooking(passengerIdentifier);
+        console.log(booking);
+
         const content: object = {booking};
+        console.log(content)
         res.render('partials/booking/getBooking', content);
+    } catch {
+        console.log("error");
     }
 });
 

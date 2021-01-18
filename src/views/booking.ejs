@@ -20,15 +20,15 @@
                 </div>
                 <div class="form-group col-md-4">
                   <label for="arrivalAirportInput">Arrival Airport</label>
-                  <input type="text" class="form-control" id="arrivalAirportInput" placeholder="Example: AAL" required name="arrivalAirport" value="AAL">
+                  <input type="text" class="form-control" id="arrivalAirportInput" placeholder="Example: LHR" required name="arrivalAirport" value="LHR">
                 </div>
                 <div class="form-group col-md-1">
                   <label for="travelersInput">Traveler(s)</label>
-                  <input type="number" class="form-control" id="travelersInput" placeholder="1" required min="1" max="9" name="travelerCount">
+                  <input type="number" class="form-control" id="travelersInput" placeholder="1" required min="1" max="9" value="1" name="travelerCount">
                 </div>
                 <div class="form-group col-md-3">
                   <label for="departureDateInput">Departure Date</label>
-                  <input type="date" class="form-control" id="departureDateInput" placeholder="Departure" required name="departureDate">
+                  <input type="date" class="form-control" id="departureDateInput" placeholder="Departure" required name="departureDate" value="2020-11-23">
                 </div>
               </div>
               <button type="submit" class="btn btn-secondary">Next</button>
@@ -65,8 +65,8 @@
       var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
       var yyyy = today.getFullYear();
       today = yyyy + '-' + mm + '-' + dd;
-      document.getElementById("departureDateInput").setAttribute("min", today);
-      document.getElementById("departureDateInput").setAttribute("value", today);
+      //document.getElementById("departureDateInput").setAttribute("min", today);
+      //document.getElementById("departureDateInput").setAttribute("value", today);
     </script>
 	</body>		
 </html>
