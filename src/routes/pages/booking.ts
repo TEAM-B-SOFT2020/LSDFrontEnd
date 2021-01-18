@@ -23,18 +23,13 @@ router.get('/', async (req, res) => {
 router.get('/get/:bookingId', async (req, res) => {
     let booking;
     try {
-        const pnr: string = "B1BS34";
-        console.log(pnr);
+        const pnr: string = req.body.bookingId;
         let passengerIdentifier: IPassengerIdentifier = { pnr };
-        console.log(passengerIdentifier);
         booking = await contract.getBooking(passengerIdentifier);
-        console.log(booking);
-
         const content: object = {booking};
-        console.log(content)
         res.render('partials/booking/getBooking', content);
     } catch {
-        console.log("error");
+        res.render("partials/error");
     }
 });
 
@@ -87,7 +82,8 @@ router.post('/create', async (req, res) => {
 
         let reservationDetailList : IReservationDetail[] = [reservationDetail];
         booking = await contract.createBooking(reservationDetailList, creditCardNumber, ffNumber);
-        res.redirect("/booking/get/" + booking.id);
+        res.redirect("/booking");
+        //res.redirect("/booking/get/" + booking.id);
     } catch {
         res.render("partials/error");
     }
