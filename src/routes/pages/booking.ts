@@ -8,6 +8,7 @@ import IPassenger from 'contract/src/IPassenger';
 import IAirportIdentifier from 'contract/src/IAirportIdentifier';
 import IFlightIdentifier from 'contract/src/IFlightIdentifier';
 import IPassengerIdentifier from 'contract/src/IPassengerIdentifier';
+import IBookingDetail from 'contract/src/DTO/IBookingDetail';
 
 // classes, interfaces & functions
 const router: express.Router = express.Router();
@@ -20,12 +21,13 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/get/:bookingId', async (req, res) => {
-    let booking;
+router.get('/get/:pnr', async (req, res) => {
+    let booking: IBookingDetail;
     try {
-        const pnr: string = req.body.bookingId;
-        let passengerIdentifier: IPassengerIdentifier = { pnr };
+        const pnr: string = req.params.pnr;
+        let passengerIdentifier: IPassengerIdentifier = { pnr: "VYF4T4" };
         booking = await contract.getBooking(passengerIdentifier);
+        console.log(booking)
         const content: object = {booking};
         res.render('partials/booking/getBooking', content);
     } catch {
@@ -37,7 +39,6 @@ router.post('/flight', async (req, res) => {
     let da : string = req.body.departureAirport.toUpperCase();
     let aa : string = req.body.arrivalAirport.toUpperCase();
     let travelerCount : number = req.body.travelerCount;
-    console.log(req.body)
     let availableFlights;
     try {
         const departureAirport : IAirportIdentifier = {iata: da}
@@ -82,7 +83,7 @@ router.post('/create', async (req, res) => {
 
         let reservationDetailList : IReservationDetail[] = [reservationDetail];
         booking = await contract.createBooking(reservationDetailList, creditCardNumber, ffNumber);
-        res.redirect("/booking");
+        res.redirect("/booking/get/" + booking.flightBookings[0].passengers[0].pnr);
         //res.redirect("/booking/get/" + booking.id);
     } catch {
         res.render("partials/error");

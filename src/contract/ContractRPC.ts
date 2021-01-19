@@ -124,7 +124,7 @@ export default class ContractRPC implements IContract {
     }
 
     async getBooking(passenger: IPassengerIdentifier): Promise<IBookingDetail> { 
-        const response: any = await rpc.getBooking(passenger);  
+        const response: any = await rpc.getBooking(passenger).call();  
         if(response.type === 'success'){        
             const bookingDetail: IBookingDetail = response.data;
             logger.info("Got Booking: " + bookingDetail)
@@ -141,7 +141,7 @@ export default class ContractRPC implements IContract {
     }
 
     async getBookingOnBookingId(id: IBookingIdentifier): Promise<IBookingDetail>{       
-        const response: any = await rpc.getBookingOnBookingId(id);  
+        const response: any = await rpc.getBookingOnBookingId(id).call();  
         if(response.type === 'success'){        
             const bookingDetail: IBookingDetail = response.data;
             logger.info("Got Booking: " + bookingDetail)
@@ -158,7 +158,7 @@ export default class ContractRPC implements IContract {
     }
 
     async cancelBooking(passenger: IPassengerIdentifier): Promise<void> {
-        const response: any = await rpc.cancelBooking(passenger);       
+        const response: any = await rpc.cancelBooking(passenger).call();       
     
         if(response?.type === 'success'){      
             logger.info("Cancelled booking: " + response)           
