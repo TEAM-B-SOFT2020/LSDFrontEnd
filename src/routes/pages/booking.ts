@@ -25,7 +25,7 @@ router.get('/get/:pnr', async (req, res) => {
     let booking: IBookingDetail;
     try {
         const pnr: string = req.params.pnr;
-        let passengerIdentifier: IPassengerIdentifier = { pnr: "VYF4T4" };
+        let passengerIdentifier: IPassengerIdentifier = { pnr: pnr };
         booking = await contract.getBooking(passengerIdentifier);
         console.log(booking)
         const content: object = {booking};
